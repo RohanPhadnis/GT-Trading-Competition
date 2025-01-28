@@ -19,7 +19,7 @@ class SocketManager {
         }
 
         // Construct WebSocket URL with sessionId and username
-        const brokerURL = `ws://localhost:8080/exchange-socket?Session-ID=${encodeURIComponent(
+        const brokerURL = `ws://ec2-13-59-143-196.us-east-2.compute.amazonaws.com:8080/exchange-socket?Session-ID=${encodeURIComponent(
             buildupData.sessionToken
         )}&Username=${encodeURIComponent(buildupData.username)}`;
 
