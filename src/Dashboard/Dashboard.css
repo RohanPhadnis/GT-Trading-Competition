@@ -1,0 +1,133 @@
+/* For the entire scroll bar */
+::-webkit-scrollbar {
+  width: 8px; 
+  background-color: rgba(0, 0, 0, 0); 
+}
+
+/* For the scrollbar track */
+::-webkit-scrollbar-track {
+  background: rgb(36, 36, 36); /* Background of the scrollbar track */
+  /*border-radius: 10px;  Rounded edges for the scrollbar track */
+  border-radius: 15px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+/* For the scrollbar thumb (scrolling handle) */
+::-webkit-scrollbar-thumb {
+  background-color: #444; /* Black scrollbar thumb */
+  /*border-radius: ; Rounded edges for the scrollbar thumb */ 
+  border-radius: 15px;
+}
+
+/* For scrollbar on hover (optional) */
+::-webkit-scrollbar-thumb:hover {
+  background-color: black; /* Slightly lighter black when hovered */
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow-y: hidden;
+}
+
+.dashboard {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  height: calc(100vh - 10px);
+}
+
+.column-1 {
+  flex: 0 0 25%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.column-2 {
+  flex: 0 0 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+}
+
+.column-3 {
+  flex: 0 0 25%;
+  display: flex;
+  flex-direction: column;
+}
+
+.widget {
+    background-color: #242323; /* Dark grey background */
+    color: white; /* White text color */
+    border: 1px solid #000; /* Black border */
+    border-radius: 8px;
+    padding: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);*/
+}
+
+/**
+Column 1
+**/
+.user-info {
+height: 20%;
+}
+
+.auctionWidget {
+  height: 20%;
+}
+
+.equities {
+  height: 30%;
+  gap: 2px;
+}
+
+.team-logo {
+  height: 10%;
+}
+
+.pnl-dashboard {
+  height: 20%;
+}
+/**
+Column 2
+**/
+.chart {
+  height: 50%;
+}
+
+.position-info {
+  height: 15%;
+}
+
+.trade-table {
+  height: 35%;
+  overflow-y: auto;
+  padding: 10px;
+}
+/**
+Column 3
+**/
+.order-book {
+  width: 100%;
+}
+/**
+row
+**/
+
+/**
+.contest-info {
+  grid-area: "contest-info";
+  grid-column: 1;
+  grid-row: span 2;
+  overflow-y: auto; 
+  overflow-x: hidden;
+}
+**/

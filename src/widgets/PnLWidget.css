@@ -1,0 +1,38 @@
+/* PnL Dashboard Styles */
+
+.pnl-widget {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #000000;
+  color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  max-width: 100%; 
+  height: 100%;
+  margin: 0 auto;
+  overflow: hidden; 
+}
+
+
+/* Table Container */
+.pnl-widget-table-container {
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
+  overflow-y: auto; /* Allow vertical scrolling if needed */
+  max-height: 500px; /* Restrict table height */
+  padding: 15px;
+  background-color: #0c0c0c; /* Slightly lighter background for contrast */
+  height: 100%; /* Make table container fill available height */
+}
+
+/* Table Styles */
+.pnl-widget-table {
+  height: 100%;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+
+
+
+

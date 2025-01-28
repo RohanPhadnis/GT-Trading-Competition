@@ -1,0 +1,50 @@
+.recent-orders {
+    background-color: #242323; /* Match the dashboard's grey color */
+    padding: 10px 15px; /* Adjust padding for more space for the table */
+    border-radius: 8px; /* Rounded edges for the outer container */
+    font-family: Arial, sans-serif; /* Clean font */
+    color: white; /* Default text color */
+    overflow-x: hidden;
+    max-height: calc(100vh - 150px); /* Ensure the widget fits within the screen, adjust '150px' based on your layout */
+    overflow-y: auto; /* Enable scrolling for overflow */
+    display: flex; /* Use flex layout to align content */
+    flex-direction: column; /* Align content vertically */
+    justify-content: flex-start; /* Align content to the top */
+}
+
+/* Table Styling */
+.recent-orders table {
+    width: 100%; /* Expand table width to take up most of the container */
+    margin: 0 auto; /* Center the table horizontally */
+    border-collapse: collapse; /* Remove default spacing between table cells */
+    background-color: #000; /* Black background for the table */
+    border-radius: 8px; /* Rounded corners for the black box */
+    overflow: hidden; /* Ensure rounded corners are applied */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow for the black box */
+}
+
+.recent-orders th,
+.recent-orders td {
+    text-align: center; /* Center-align text */
+    padding: 10px; /* Add padding for readability */
+    color: white; /* White text for contrast inside the black box */
+}
+
+.recent-orders th {
+    text-transform: uppercase; /* Capitalize headers */
+    border-bottom: 2px solid white; /* Underline headers */
+    font-weight: bold; /* Bold text for headers */
+    font-size: 14px; /* Slightly smaller header font */
+}
+
+.recent-orders td {
+    font-size: 14px; /* Regular font size for data */
+}
+
+.recent-orders tr:nth-child(even) {
+    background-color: #1a1a1a; /* Slightly lighter black for alternate rows */
+}
+
+.recent-orders tr:hover {
+    background-color: #333; /* Highlight row on hover */
+}
