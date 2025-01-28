@@ -1,5 +1,6 @@
+import socketManager from "../HelperClasses/SocketManager";
+import orderBookInstance from "./OrderBook";
 const URI = "http://localhost:8080";
-
 class AsyncAPICall {
     path;
     dependency;
@@ -11,7 +12,7 @@ class AsyncAPICall {
     constructor(path, dependency) {
         this.path = path;
         this.data = null;
-        this.promise = new Promise((resolve, reject) => {resolve();});
+        this.promise = new Promise((resolve, reject) => { resolve(); });
         this.subscriber = (val) => {};
         this.dependency = dependency;
         this.counter = 0;
@@ -29,17 +30,18 @@ class AsyncAPICall {
             }
         }
         let promise = fetch(URI + this.path, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(form)
-        })
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(form)
+            })
             .then((data) => {
                 console.log(data.status);
                 return data.json();
             });
         this.data = await promise;
+        this.data = {...this.data, ...form };
         this.counter++;
         this.subscriber(this.counter);
     }
@@ -56,7 +58,29 @@ let limitOrderObject = new AsyncAPICall("/limit_order", buildupObject);
 let marketOrderObject = new AsyncAPICall("/market_order", buildupObject);
 
 export function buildupHandler(data, subscriber) {
-    buildupObject.setSubscriber(subscriber);
+    // Set a subscriber that gets triggered when the API call completes
+    buildupObject.setSubscriber((counter) => {
+        subscriber(counter);
+
+        // After the build-up is successful (counter > 0), connect to WebSocket
+        if (counter > 0) {
+            const buildupData = getBuildupData();
+            console.log(buildupData)
+            console.log(buildupObject)
+            console.log(data)
+
+            // Ensure buildupData contains the required sessionId and username
+            if (buildupData && buildupData.username && buildupData.sessionToken && buildupData.orderBookData) {
+                console.log("Build-up complete. Initiating WebSocket connection...");
+                socketManager.connect(); // Initiates WebSocket connection
+                orderBookInstance._createSortedMap(buildupData.orderBookData)
+            } else {
+                console.error("Buildup data is incomplete. Cannot connect to WebSocket.");
+            }
+        }
+    });
+
+    // Initiate the API call
     buildupObject.request(data);
 }
 
