@@ -7,7 +7,8 @@ import "./CurrentPositionWidget.css";
 todo:
   - add error message queue
   - add way to limit requests while another request is ongoing
-  - track ticker
+  - track tickertus
+
  */
 const CurrentPositionWidget = ({ selectedStock }) => {
   const [price, setPrice] = useState('');
