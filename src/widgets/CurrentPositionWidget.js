@@ -1,18 +1,57 @@
 import React, { useState } from 'react';
+import { marketOrderHandler, getMarketOrderData, limitOrderHandler, getLimitOrderData } from '../HelperClasses/api';
 import "./CurrentPositionWidget.css";
 
+
+/*
+todo:
+  - add error message queue
+  - add way to limit requests while another request is ongoing
+  - track ticker
+ */
 const CurrentPositionWidget = ({ selectedStock }) => {
   const [price, setPrice] = useState('');
   const [amount, setAmount] = useState(10);
+  const [subscribeVar, setSubscribeVar] = useState(0);
 
   const handleBuy = () => {
-    const orderType = (!price || Number(price) === 0) ? "Market" : `Limit (Price: ${price})`;
-    console.log(`Buy order placed for ${amount} shares of ${selectedStock} at ${price} (${orderType}).`);
+    const isMarket = (!price || Number(price) === 0);
+    if (isMarket) {
+      marketOrderHandler({
+        ticker: 'TSLA', // todo fix this,
+        volume: amount,
+        isBid: true
+      }, setSubscribeVar);
+    } else {
+      limitOrderHandler({
+        ticker: 'TSLA',
+        volume: amount,
+        isBid: true,
+        price: price
+      }, setSubscribeVar);
+    }
+    // const orderType = (!price || Number(price) === 0) ? "Market" : `Limit (Price: ${price})`;
+    // console.log(`Buy order placed for ${amount} shares of ${selectedStock} at ${price} (${orderType}).`);
   };
 
   const handleSell = () => {
-    const orderType = (!price || Number(price) === 0) ? "Market" : `Limit (Price: ${price})`;
-    console.log(`Sell order placed for ${amount} shares of ${selectedStock} at ${price} (${orderType}).`);
+    const isMarket = (!price || Number(price) === 0);
+    if (isMarket) {
+      marketOrderHandler({
+        ticker: 'TSLA', // todo fix this,
+        volume: amount,
+        isBid: false
+      }, setSubscribeVar);
+    } else {
+      limitOrderHandler({
+        ticker: 'TSLA',
+        volume: amount,
+        isBid: false,
+        price: price
+      }, setSubscribeVar);
+    }
+    // const orderType = (!price || Number(price) === 0) ? "Market" : `Limit (Price: ${price})`;
+    // console.log(`Sell order placed for ${amount} shares of ${selectedStock} at ${price} (${orderType}).`);
   };
 
   return (
