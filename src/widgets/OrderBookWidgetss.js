@@ -1,43 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import PriceLevelWidget from "./PriceLevelWidgets";
 import "./OrderBookWidgets.css";
-import SampleOrderBookData from "../SampleData/SampleOrderBookDatas.json";
-import orderBook from "../HelperClasses/OrderBook"; // Import the OrderBook singleton
+import orderBookInstance from "../HelperClasses/OrderBook"; // Import the OrderBook singleton
 
 const OrderBookWidget = ({ selectedStock }) => {
-    // Find the matching data for the selected ticker
-    const [stockData, setStockData] = useState(orderBook.orderBooks[selectedStock] || {});
+    // Initialize state for order book data
+    const [stockData, setStockData] = useState({ bidVolumes: {}, askVolumes: {} });
+
+    // Memoize the update function to prevent unnecessary re-renders
+    const updateStockData = useCallback((orderBooks) => {
+        console.log("OrderBookWidget RECEIVED UPDATE!", orderBooks);
+        console.log(selectedStock);
+        setStockData({
+            bidVolumes: {...orderBookInstance.orderBooks[selectedStock].bidVolumes },
+            askVolumes: {...orderBookInstance.orderBooks[selectedStock].askVolumes },
+        });
+    }, [selectedStock]);
 
     useEffect(() => {
-        // Subscriber callback to update stock data
-        const updateStockData = (orderBooks) => {
-            setStockData(orderBooks[selectedStock] || {});
-        };
+        // Subscribe to order book updates
+        orderBookInstance.subscribe(updateStockData);
 
-        // Subscribe to OrderBook updates
-        orderBook.subscribe(updateStockData);
+        // Initialize with current data
+        if (orderBookInstance[selectedStock]) {
+            setStockData(orderBookInstance[selectedStock]);
+        }
 
         // Cleanup: Unsubscribe on unmount
         return () => {
-            orderBook.unsubscribe(updateStockData);
+            orderBookInstance.unsubscribe(updateStockData);
         };
-    }, [selectedStock]); // Re-run effect if selectedStock changes
+    }, [selectedStock, updateStockData]); // Rerun when selectedStock changes
 
-    // Destructure Bids/Asks, default to empty arrays if undefined
-    const { bidVolumes = {}, askVolumes = {} } = stockData || {};
+    // Destructure bids and asks with fallbacks
+    const { bidVolumes = {}, askVolumes = {} } = stockData;
 
-    // Convert bids/asks from objects to arrays and sort them
-    const sortedBids = Object.entries(bidVolumes).map(([price, quantity]) => ({
-        P: parseFloat(price), // Price
-        Q: quantity, // Quantity
-    })).sort((a, b) => b.P - a.P); // Sort bids high-to-low
+    // Convert bids and asks from objects to arrays and sort
+    const sortedBids = Object.entries(bidVolumes)
+        .map(([price, quantity]) => ({ P: parseFloat(price), Q: quantity }))
+        .sort((a, b) => b.P - a.P); // Sort bids high-to-low
 
-    const sortedAsks = Object.entries(askVolumes).map(([price, quantity]) => ({
-        P: parseFloat(price), // Price
-        Q: quantity, // Quantity
-    })).sort((a, b) => a.P - b.P); // Sort asks low-to-highconst { Bids = [], Asks = [] } = stockData || {};
-
-
+    const sortedAsks = Object.entries(askVolumes)
+        .map(([price, quantity]) => ({ P: parseFloat(price), Q: quantity }))
+        .sort((a, b) => a.P - b.P); // Sort asks low-to-high
 
     return ( <
         div className = "order-book-widget" >
@@ -45,7 +50,7 @@ const OrderBookWidget = ({ selectedStock }) => {
         h4 > Order Book
         for { selectedStock } < /h4>
 
-        { /* Column Headers: Price, Quantity, Orders */ } <
+        { /* Column Headers */ } <
         div className = "column-headers" >
         <
         span className = "header price-header" > Price < /span> <
@@ -53,25 +58,21 @@ const OrderBookWidget = ({ selectedStock }) => {
         span className = "header orders-header" > Orders < /span> < /
         div >
 
-        { /* Bids first (top of the list) */ } {
+        { /* Render Bids */ } {
             sortedBids.map((bid, index) => ( <
-                PriceLevelWidget key = { index }
+                PriceLevelWidget key = { `bid-${index}` }
                 price = { bid.P }
                 quantity = { bid.Q }
-                orders = "-" // Filler for now
-                /
-                >
+                orders = "-" / >
             ))
         }
 
-        { /* Asks next (bottom of the list) */ } {
+        { /* Render Asks */ } {
             sortedAsks.map((ask, index) => ( <
-                PriceLevelWidget key = { index }
+                PriceLevelWidget key = { `ask-${index}` }
                 price = { ask.P }
                 quantity = { ask.Q }
-                orders = "-" // Filler for now
-                /
-                >
+                orders = "-" / >
             ))
         } <
         /div>

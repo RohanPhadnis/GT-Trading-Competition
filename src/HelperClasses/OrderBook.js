@@ -20,6 +20,7 @@ class OrderBook {
     subscribe(callback) {
         if (typeof callback === "function") {
             this.subscribers.push(callback);
+            console.log("✅ Subscribed a new callback. Total subscribers:", this.subscribers.length);
         }
     }
 
@@ -65,6 +66,8 @@ class OrderBook {
 
         // Notify all subscribers after updating the volumes
         this._notifySubscribers();
+        console.log("Notified React")
+        console.log(orderBookInstance)
     }
 
     // Convert the object to a string representation

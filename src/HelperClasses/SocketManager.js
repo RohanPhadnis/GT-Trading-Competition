@@ -65,13 +65,13 @@ class SocketManager {
 
         // Subscribe to public orderbook updates
         this.stompClient.subscribe("/topic/orderbook", (message) => {
-            console.log("Orderbook message received:", message.body);
+            //console.log("Orderbook message received:", message.body);
             this.handleOrderbookMessage(JSON.parse(message.body));
         });
 
         // Subscribe to private user-specific updates
         this.stompClient.subscribe("/user/queue/private", (message) => {
-            console.log("Private message received:", message.body);
+            //console.log("Private message received:", message.body);
             this.handlePrivateMessage(JSON.parse(message.body));
         });
     }
