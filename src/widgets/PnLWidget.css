@@ -2,7 +2,7 @@
 .widget.pnl-dashboard {
   position: relative; /* Prevent overlapping or stacking */
   background-color: #242323; /* Dark background for a sleek appearance */
-  padding: 15px; /* Slightly increased padding for better spacing */
+  padding: 5px; /* Slightly increased padding for better spacing */
   max-width: 335px; /* Slightly larger max width for better alignment */
   text-align: center; /* Center align text inside */
   font-family: 'Roboto', sans-serif; /* Consistent font styling */
@@ -13,10 +13,10 @@
 
 /* Total PnL Display */
 .total-pnl {
-  font-size: 1.7rem; /* Slightly larger font size for emphasis */
+  font-size: 1.5rem; /* Slightly larger font size for emphasis */
   font-weight: bold; /* Emphasize the total PnL */
   background-color: #000000; /* Subtle difference from widget background */
-  padding: 32px; /* Increased padding for balance */
+  padding: 15px; /* Increased padding for balance */
   border-radius: 8px; /* Smooth corners for consistency */
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* Slight shadow for depth */
 }
