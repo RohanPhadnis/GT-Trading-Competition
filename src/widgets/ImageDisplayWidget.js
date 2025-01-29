@@ -5,7 +5,7 @@ const ImageDisplayWidget = () => {
   return (
     <div className="image-widget">
       <img
-        src="https://static.wikia.nocookie.net/collegefootballmania/images/1/11/Georgia-Tech-Yellow-Jackets-Logo.png/revision/latest/scale-to-width-down/2000?cb=20210531114615"
+        src="logo.jpeg"
         alt="Georgia Tech Yellow Jackets Logo"
         className="team-logo"
       />

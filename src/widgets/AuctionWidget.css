@@ -1,50 +1,64 @@
+/* Import Roboto font - ensure it's at the very top */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Main container with reduced height and increased width */
 .auction-widget {
-    width: 35%;
-    height: calc(100%);
+    width: 70%;
+    height: 90%;
     background-color: black;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif !important;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Align content vertically */
-    align-items: center; /* Align content horizontally */
+    justify-content: center;
+    align-items: center;
     box-sizing: border-box;
     line-height: 30px;
     letter-spacing: 1px;
     color: white;
-    text-align: center; /* Center text inside elements */
-}
-
-
-.auction-widget-header {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
     text-align: center;
 }
 
+/* Header styling */
+.auction-widget-header {
+    font-size: 30px;
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Content container with centered elements */
 .auction-widget-content {
     width: 100%;
+    font-family: 'Roboto', sans-serif !important;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    align-items: center;
+  
+    
 }
 
+/* Submit button with centered alignment and updated size */
 .auction-widget-button {
-    padding: 10px 15px;
-    font-size: 16px;
+    width: 60%;
+    padding: 4px;
+    font-size: 18px;
     font-weight: bold;
+    font-family: 'Roboto', sans-serif !important;
     color: white;
-    background-color: #4caf50;
+    background-color: #04a454;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     text-align: center;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+/* Button hover effect */
 .auction-widget-button:hover {
-    background-color: #0056b3;
+    background-color: #247a52;
 }

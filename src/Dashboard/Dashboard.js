@@ -64,7 +64,7 @@ const Dashboard = () => {
         <div className="column-1">
             {/*USER AUTHENTICATION AND USER INFO*/}
             <div className="widget user-info">
-                User Authentication
+
                 {!isSubmitted && <AuthenticationInput/>} {/* Conditionally render input */}
                 <p>{message}</p> {/* Display message based on the match */}
             </div>

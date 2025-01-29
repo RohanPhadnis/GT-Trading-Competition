@@ -17,7 +17,7 @@ const OrderBookWidget = ({ selectedStock }) => {
 
   return (
     <div className="order-book-widget">
-      <h4>Order Book for {selectedStock}</h4>
+      <h4 className="order-book-header">Order Book for {selectedStock}</h4>
 
       {/* Column Headers: Price, Quantity, Orders */}
       <div className="column-headers">

@@ -1,38 +1,34 @@
-/* PnL Dashboard Styles */
-
-.pnl-widget {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  background-color: #000000;
-  color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  max-width: 100%; 
-  height: 100%;
-  margin: 0 auto;
-  overflow: hidden; 
+/* General Widget Styling */
+.widget.pnl-dashboard {
+  position: relative; /* Prevent overlapping or stacking */
+  background-color: #242323; /* Dark background for a sleek appearance */
+  padding: 15px; /* Slightly increased padding for better spacing */
+  max-width: 335px; /* Slightly larger max width for better alignment */
+  text-align: center; /* Center align text inside */
+  font-family: 'Roboto', sans-serif; /* Consistent font styling */
+  color: #ffffff; /* White text for contrast on dark background */
+  border: none !important; /* Ensure no border is applied */
+  outline: none !important; /* Remove any focus outline */
 }
 
-
-/* Table Container */
-.pnl-widget-table-container {
-  overflow-x: auto; /* Allow horizontal scrolling if needed */
-  overflow-y: auto; /* Allow vertical scrolling if needed */
-  max-height: 500px; /* Restrict table height */
-  padding: 15px;
-  background-color: #0c0c0c; /* Slightly lighter background for contrast */
-  height: 100%; /* Make table container fill available height */
+/* Total PnL Display */
+.total-pnl {
+  font-size: 1.7rem; /* Slightly larger font size for emphasis */
+  font-weight: bold; /* Emphasize the total PnL */
+  background-color: #000000; /* Subtle difference from widget background */
+  padding: 32px; /* Increased padding for balance */
+  border-radius: 8px; /* Smooth corners for consistency */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* Slight shadow for depth */
 }
 
-/* Table Styles */
-.pnl-widget-table {
-  height: 100%;
-  width: 100%;
-  border-collapse: collapse;
-  text-align: center;
+/* Styling for Positive PnL */
+.positive {
+  color: #2ecc71; /* Bright green to indicate profit */
+  font-weight: bold; /* Highlight the result */
 }
 
-
-
-
-
+/* Styling for Negative PnL */
+.negative {
+  color: #e74c3c; /* Bright red to indicate loss */
+  font-weight: bold; /* Highlight the result */
+}

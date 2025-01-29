@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import "./PnLWidget.css";
+
 import samplePnLData from "../SampleData/samplePnlData.json";
 import sampleStockWidgetData from "../SampleData/sampleStockWidgetData.json";
 import DataFinder from "../HelperClasses/DataFinder";
@@ -39,8 +40,7 @@ const PnLWidget = () => {
   const pnlData = calculatePnL();
   const totalPnl = pnlData.reduce((total, trade) => total + parseFloat(trade.pnl), 0);
   return (
-    <div className="pnl-widget">
-      {/* Display Total PnL */}
+    <div className="widget pnl-dashboard">  {/* <-- Use existing widget styles */}
       <div className="total-pnl">
         <strong>Total Realized PnL: </strong>
         <br></br>
@@ -48,8 +48,6 @@ const PnLWidget = () => {
           ${totalPnl.toFixed(2)}
         </span>
       </div>
-  
-      {/* PnL Table */}
     </div>
   );
   

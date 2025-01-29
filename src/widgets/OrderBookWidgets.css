@@ -8,6 +8,7 @@
   border: 1px solid #444;
   border-radius: 4px;
   padding-bottom: 8px;
+  font-size: 16px;
 }
 
 /* The single row that labels the columns (Price, Quantity, Orders) */
@@ -16,10 +17,19 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
   background-color: #242424;
   border-bottom: 1px solid #444;
+}
+
+.order-book-header {
+  margin-top: 16px;
+  font-size: 32px; /* Increase size */
+  font-weight: bold;
+  margin-bottom: 16px;
+  text-align: center;
+  color: white;
 }
 
 /* Price header */
@@ -49,7 +59,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 8px 10px;
-  font-size: 14px;
+  font-size: 18px;
   border-bottom: 1px solid #333;
 }
 
