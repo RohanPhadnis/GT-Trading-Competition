@@ -8,7 +8,7 @@ const NewTradeTable = () => {
     useEffect(() => {
         // Subscribe to updates from userPortfolio
         const handlePortfolioUpdate = (portfolioData) => {
-            console.log("📊 Updated Portfolio Data:", portfolioData);
+            //console.log("📊 Updated Portfolio Data:", portfolioData);
             setPositions(portfolioData.positions || {});
         };
 
@@ -35,13 +35,13 @@ const NewTradeTable = () => {
         th colSpan = { 3 }
         className = "header-section" >
         Current Positions <
-        /th> <
-        /tr> <
+        /th> < /
+        tr > <
         tr >
         <
         th > Ticker < /th> <
-        th > Quantity Owned < /th> <
-        /tr> <
+        th > Quantity Owned < /th> < /
+        tr > <
         /thead>
 
         { /* Table Body */ } <
@@ -51,22 +51,23 @@ const NewTradeTable = () => {
                     tr key = { `position-${index}` } >
                     <
                     td > { ticker } < /td> <
-                    td > { quantity } < /td> <
-                    /tr>
+                    td > { quantity } < /td> < /
+                    tr >
                 ))
             ) : ( <
                 tr >
                 <
                 td colSpan = { 2 }
                 style = {
-                    { textAlign: "center" } } > No positions available < /td> <
-                /tr>
+                    { textAlign: "center" }
+                } > No positions available < /td> < /
+                tr >
             )
         } <
-        /tbody> <
-        /table> <
-        /div> <
-        /div>
+        /tbody> < /
+        table > <
+        /div> < /
+        div >
     );
 };
 

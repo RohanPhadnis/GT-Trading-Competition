@@ -1,6 +1,7 @@
 import socketManager from "../HelperClasses/SocketManager";
 import orderBookInstance from "./OrderBook";
-const URI = "http://ec2-13-59-143-196.us-east-2.compute.amazonaws.com:8080";
+//const URI = "http://ec2-13-59-143-196.us-east-2.compute.amazonaws.com:8080";
+const URI = "http://localhost:8080"
 class AsyncAPICall {
     path;
     dependency;

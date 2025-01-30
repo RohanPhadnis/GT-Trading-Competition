@@ -89,23 +89,28 @@ class OrderBook {
         this._notifySubscribers();
     }
 
-    // Update volumes with a list of updates
     updateVolumes(updates) {
         updates.forEach(({ ticker, price, side, volume }) => {
             const sideKey = side.toLowerCase() === 'bid' ? 'bidVolumes' : 'askVolumes';
+            console.log(ticker, price, side, volume);
 
+            // Ensure the ticker exists
             if (!this.orderBooks[ticker]) {
                 this.orderBooks[ticker] = { bidVolumes: {}, askVolumes: {} };
             }
 
+            // Convert price to a numeric key for consistency
+            const numericPrice = parseFloat(price);
+
             if (volume === 0) {
                 // Remove price level if volume is zero
-                delete this.orderBooks[ticker][sideKey][price.toFixed(2)];
+                console.log("Delete Occurring");
+                delete this.orderBooks[ticker][sideKey][numericPrice];
             } else {
                 // Merge the update into the existing order book
                 this.orderBooks[ticker][sideKey] = {
                     ...this.orderBooks[ticker][sideKey],
-                    [price.toFixed(2)]: volume
+                    [numericPrice]: volume
                 };
             }
 
@@ -120,6 +125,7 @@ class OrderBook {
 
         this._notifySubscribers(); // Notify React components
     }
+
 
 
     // Convert the object to a string representation

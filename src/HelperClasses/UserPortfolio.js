@@ -47,7 +47,7 @@ class UserPortfolio {
         }
 
         this._notifySubscribers(); // Notify on updates
-        console.log("Portfolio updated:", this.data);
+        //console.log("Portfolio updated:", this.data);
     }
 
     getPortfolio() {
