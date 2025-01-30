@@ -1,29 +1,50 @@
-import React, { useState } from 'react'
-import sampleStockWidgetData from "../SampleData/sampleStockWidgetData.json";
+import React, { useEffect, useState } from "react";
 import "../Dashboard/Dashboard.css";
-import StockWidget from "./StockWidget.js";
-import DataHelper from '../HelperClasses/DataFinder';
+import { getTickers } from "../HelperClasses/api.js";
+import StockWidget from "./StockWidget.js"; // Ensure StockWidget is imported
 
 const EquitiesDashboard = ({ selectedStock, setSelectedStock }) => {
+    const [tickers, setTickers] = useState([]);
 
-
+    useEffect(() => {
+        const fetchedTickers = getTickers();
+        console.log("✅ Retrieved tickers:", fetchedTickers);
+        if (Array.isArray(fetchedTickers)) {
+            setTickers(fetchedTickers);
+        } else {
+            console.error("❌ getTickers() did not return an array:", fetchedTickers);
+            setTickers([]);
+        }
+    }, []);
 
     const handleStockClick = (ticker) => {
-      setSelectedStock(ticker);
-    }
+        setSelectedStock(ticker);
+    };
 
-    const allTickers = DataHelper.getAllStocks().map(stock => stock.ticker);
-    return (
-        <>
-         {allTickers.map(stock => (
-            <div 
-              onClick={() => handleStockClick(stock)} 
-            >
-              <StockWidget ticker={stock} />
-            </div>
-          ))}   
-        </>
-      );
-}
+    return ( <
+        div className = "equities-dashboard" >
+        <
+        h2 > Tickers Trading < /h2> <
+        div className = "tickers-container" > {
+            tickers.length > 0 ? (
+                tickers.map((ticker) => ( <
+                    div key = { ticker }
+                    className = { `stock-item ${selectedStock === ticker ? "selected" : ""}` }
+                    onClick = {
+                        () => handleStockClick(ticker)
+                    } >
+                    <
+                    StockWidget ticker = { ticker }
+                    /> < /
+                    div >
+                ))
+            ) : ( <
+                p > No tickers available < /p>
+            )
+        } <
+        /div> < /
+        div >
+    );
+};
 
-export default EquitiesDashboard; 
+export default EquitiesDashboard;
