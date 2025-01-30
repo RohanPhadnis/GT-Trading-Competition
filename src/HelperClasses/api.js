@@ -1,7 +1,7 @@
 import socketManager from "../HelperClasses/SocketManager";
 import orderBookInstance from "./OrderBook";
-//const URI = "http://ec2-13-59-143-196.us-east-2.compute.amazonaws.com:8080";
-const URI = "http://localhost:8080"
+const URI = "http://ec2-13-59-143-196.us-east-2.compute.amazonaws.com:8080";
+//const URI = "http://localhost:8080"
 class AsyncAPICall {
     path;
     dependency;
@@ -57,6 +57,7 @@ let buildupObject = new AsyncAPICall("/buildup", null);
 let teardownObject = new AsyncAPICall("/teardown", buildupObject);
 let limitOrderObject = new AsyncAPICall("/limit_order", buildupObject);
 let marketOrderObject = new AsyncAPICall("/market_order", buildupObject);
+let removeObject = new AsyncAPICall("/remove", buildupObject);
 let tickers = [];
 const setTickers = (newTickers) => {
     if (Array.isArray(newTickers)) {
@@ -106,6 +107,10 @@ export function limitOrderHandler(data, subscriber) {
 export function marketOrderHandler(data, subscriber) {
     marketOrderObject.setSubscriber(subscriber);
     marketOrderObject.request(data);
+}
+export function removeHandler(data) {
+    console.log(data);
+    removeObject.request(data);
 }
 
 export function getBuildupData() {
