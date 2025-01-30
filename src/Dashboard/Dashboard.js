@@ -107,11 +107,8 @@ const Dashboard = () => {
         /> < /
         div >
 
-        { /* CANDLESTICK CHART OF SELECTED STOCK */ } <
-        div className = "widget chart" >
         <
-        ChartWidget selectedStock = { selectedStock }
-        /> < /
+        /
         div > { /* TRADE TABLE */ } <
         div className = "widget trade-table" >
         <

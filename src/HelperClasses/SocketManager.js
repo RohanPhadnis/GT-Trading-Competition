@@ -98,10 +98,27 @@ class SocketManager {
 
     // Handle incoming private messages
     handlePrivateMessage(data) {
-        //console.log("Handling private message:", data);
+        console.log("Handling private message:", data);
+        try {
+            // Ensure the message contains valid JSON content
+            if (!data) {
+                console.warn("Received an empty or invalid private message:", data);
+                return;
+            }
 
-        // Add your logic to process private messages
+            // Parse the message content (assuming it's a JSON string)
+            console.log("📊 Parsed Private Message Content:", data);
+
+            // Update the user's portfolio using the parsed message
+            userPortfolio.updatePortfolio(data);
+
+            console.log("✅ User portfolio updated successfully.");
+        } catch (error) {
+            console.error("❌ Error processing private message:", error);
+        }
     }
+
+    // Add your logic to process private messages
 
     // Publish messages to a specific destination
     sendMessage(destination, body) {
@@ -115,7 +132,7 @@ class SocketManager {
             body: JSON.stringify(body),
         });
 
-        console.log(`Message sent to ${destination}:`, body);
+        //console.log(`Message sent to ${destination}:`, body);
     }
 }
 
