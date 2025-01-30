@@ -103,7 +103,30 @@ export function limitOrderHandler(data, subscriber) {
 }
 
 export function marketOrderHandler(data, subscriber) {
-    marketOrderObject.setSubscriber(subscriber);
+    console.log("⚡ Initiating Market Order Handler...");
+    console.log("📋 Order Data:", data);
+
+    if (!data.ticker || !data.volume) {
+        console.error("❌ Invalid Market Order: Missing ticker or volume", data);
+        return;
+    }
+
+    marketOrderObject.setSubscriber((counter) => {
+        console.log(`🔄 Market Order Callback Triggered. Counter: ${counter}`);
+        const marketOrderData = getMarketOrderData();
+
+        console.log("📩 Market Order Response:", marketOrderData);
+
+        if (!marketOrderData || !marketOrderData.success) {
+            console.error("❌ Market Order Failed. Response Data:", marketOrderData);
+        } else {
+            console.log(`✅ Market Order Successfully Processed for ${data.ticker}, Volume: ${data.volume}`);
+        }
+
+        subscriber(counter);
+    });
+
+    console.log("📤 Sending Market Order Request...");
     marketOrderObject.request(data);
 }
 

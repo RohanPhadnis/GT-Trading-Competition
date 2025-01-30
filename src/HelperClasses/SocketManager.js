@@ -28,7 +28,7 @@ class SocketManager {
         this.stompClient = new Client({
             brokerURL: brokerURL,
             debug: (str) => {
-                console.log(str); // Debugging logs
+                //console.log(str); // Debugging logs
             },
             reconnectDelay: 5000, // Reconnect after 5 seconds if disconnected
             heartbeatIncoming: 4000, // Client heartbeat

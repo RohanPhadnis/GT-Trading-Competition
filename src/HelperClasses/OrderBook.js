@@ -36,11 +36,57 @@ class OrderBook {
 
     // Helper to create a sorted map (object) from volumes
     _createSortedMap(volumes, reverse) {
-        const entries = Object.entries(volumes)
-            .map(([price, qty]) => [parseFloat(price), parseFloat(qty)])
-            .sort(([priceA], [priceB]) => reverse ? priceB - priceA : priceA - priceB);
+        if (!volumes || typeof volumes !== "object") {
+            console.warn("⚠️ Invalid volumes received:", volumes);
+            return {};
+        }
 
-        return Object.fromEntries(entries);
+        console.log("🔄 Building Up Order Book for All Tickers...");
+
+        // **Log all tickers (top-level keys in volumes)**
+        const tickers = Object.keys(volumes);
+        console.log("📌 Tickers in Order Book:", tickers);
+
+        // **Store processed order books**
+
+
+        // **Iterate through each ticker**
+        for (const ticker of tickers) {
+            const tickerData = volumes[ticker];
+
+            if (!tickerData || typeof tickerData !== "object") {
+                console.warn(`⚠️ Skipping invalid ticker: ${ticker}`);
+                continue;
+            }
+
+            console.log(`📊 Processing Ticker: ${ticker}`);
+
+            // **Extract bidVolumes and askVolumes**
+            const bidVolumes = tickerData.bidVolumes || {};
+            const askVolumes = tickerData.askVolumes || {};
+
+            console.log(`📉 Ask Volume Keys for ${ticker}:`, Object.keys(askVolumes));
+            console.log(`📈 Bid Volume Keys for ${ticker}:`, Object.keys(bidVolumes));
+
+            // **Sort bidVolumes (high-to-low) and askVolumes (low-to-high)**
+            this.orderBooks[ticker] = {
+                bidVolumes: Object.fromEntries(
+                    Object.entries(bidVolumes)
+                    .filter(([price, qty]) => !isNaN(parseFloat(price)) && !isNaN(parseFloat(qty)) && parseFloat(qty) > 0)
+                    .map(([price, qty]) => [parseFloat(price), parseFloat(qty)])
+                    .sort(([priceA], [priceB]) => priceB - priceA) // High to Low
+                ),
+                askVolumes: Object.fromEntries(
+                    Object.entries(askVolumes)
+                    .filter(([price, qty]) => !isNaN(parseFloat(price)) && !isNaN(parseFloat(qty)) && parseFloat(qty) > 0)
+                    .map(([price, qty]) => [parseFloat(price), parseFloat(qty)])
+                    .sort(([priceA], [priceB]) => priceA - priceB) // Low to High
+                ),
+            };
+
+            console.log(`✅ Built Order Book for ${ticker}:`, this.orderBooks[ticker]);
+        }
+        this._notifySubscribers();
     }
 
     // Update volumes with a list of updates
@@ -53,22 +99,28 @@ class OrderBook {
             }
 
             if (volume === 0) {
+                // Remove price level if volume is zero
                 delete this.orderBooks[ticker][sideKey][price.toFixed(2)];
             } else {
-                this.orderBooks[ticker][sideKey][price.toFixed(2)] = volume;
+                // Merge the update into the existing order book
+                this.orderBooks[ticker][sideKey] = {
+                    ...this.orderBooks[ticker][sideKey],
+                    [price.toFixed(2)]: volume
+                };
             }
 
-            this.orderBooks[ticker][sideKey] = this._createSortedMap(
-                this.orderBooks[ticker][sideKey],
-                sideKey === 'bidVolumes'
+            // Ensure sorting and cleaning are maintained
+            this.orderBooks[ticker][sideKey] = Object.fromEntries(
+                Object.entries(this.orderBooks[ticker][sideKey])
+                .filter(([p, q]) => !isNaN(parseFloat(p)) && !isNaN(parseFloat(q)) && parseFloat(q) > 0)
+                .map(([p, q]) => [parseFloat(p), parseFloat(q)])
+                .sort(([pA], [pB]) => (sideKey === 'bidVolumes' ? pB - pA : pA - pB))
             );
         });
 
-        // Notify all subscribers after updating the volumes
-        this._notifySubscribers();
-        console.log("Notified React")
-        console.log(orderBookInstance)
+        this._notifySubscribers(); // Notify React components
     }
+
 
     // Convert the object to a string representation
     toString() {
