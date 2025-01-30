@@ -1,6 +1,7 @@
 import { Client } from "@stomp/stompjs";
 import { getBuildupData } from "../HelperClasses/api";
 import orderBookInstance from "../HelperClasses/OrderBook";
+import userPortfolio from "./UserPortfolio";
 
 class SocketManager {
     constructor() {
@@ -87,17 +88,18 @@ class SocketManager {
 
     // Handle incoming public orderbook messages
     handleOrderbookMessage(data) {
-        console.log("Handling orderbook message:", data);
+        //console.log("Handling orderbook message:", data);
 
         const updates = JSON.parse(data.content);
-        console.log("OrderBook Update", updates)
-            // Pass updates directly to the OrderBook instance
+        //console.log("OrderBook Update", updates)
+        // Pass updates directly to the OrderBook instance
         orderBookInstance.updateVolumes(updates);
     }
 
     // Handle incoming private messages
     handlePrivateMessage(data) {
-        console.log("Handling private message:", data);
+        //console.log("Handling private message:", data);
+
         // Add your logic to process private messages
     }
 

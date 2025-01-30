@@ -56,7 +56,15 @@ let buildupObject = new AsyncAPICall("/buildup", null);
 let teardownObject = new AsyncAPICall("/teardown", buildupObject);
 let limitOrderObject = new AsyncAPICall("/limit_order", buildupObject);
 let marketOrderObject = new AsyncAPICall("/market_order", buildupObject);
-
+let tickers = [];
+const setTickers = (newTickers) => {
+    if (Array.isArray(newTickers)) {
+        // ✅ Ensure only valid strings get added
+        const filteredTickers = newTickers.filter(ticker => typeof ticker === "string");
+        tickers.splice(0, tickers.length, ...filteredTickers);
+        console.log("Tickers updated:", tickers);
+    }
+};
 export function buildupHandler(data, subscriber) {
     // Set a subscriber that gets triggered when the API call completes
     buildupObject.setSubscriber((counter) => {
@@ -68,10 +76,10 @@ export function buildupHandler(data, subscriber) {
             console.log(buildupData)
             console.log(buildupObject)
             console.log(data)
-
-            // Ensure buildupData contains the required sessionId and username
             if (buildupData && buildupData.username && buildupData.sessionToken && buildupData.orderBookData) {
                 console.log("Build-up complete. Initiating WebSocket connection...");
+                buildupData.orderBookData = JSON.parse(buildupData.orderBookData);
+                setTickers(Object.keys(buildupData.orderBookData));
                 socketManager.connect(); // Initiates WebSocket connection
                 orderBookInstance._createSortedMap(buildupData.orderBookData)
             } else {
@@ -113,4 +121,7 @@ export function getLimitOrderData() {
 
 export function getMarketOrderData() {
     return marketOrderObject.data;
+}
+export function getTickers() {
+    return Array.isArray(tickers) && tickers.length > 0 ? [...tickers] : [];
 }
