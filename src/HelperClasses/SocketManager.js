@@ -24,8 +24,11 @@ class SocketManager {
         const brokerURL = `ws://ec2-13-59-143-196.us-east-2.compute.amazonaws.com:8080/exchange-socket?Session-ID=${encodeURIComponent(
             buildupData.sessionToken
         )}&Username=${encodeURIComponent(buildupData.username)}`; */
-
+        /*
         const brokerURL = `ws://localhost:8080/exchange-socket?Session-ID=${encodeURIComponent(
+            buildupData.sessionToken
+        )}&Username=${encodeURIComponent(buildupData.username)}`*/
+        const brokerURL = `ws://ec2-3-16-107-184.us-east-2.compute.amazonaws.com:8080/exchange-socket?Session-ID=${encodeURIComponent(
             buildupData.sessionToken
         )}&Username=${encodeURIComponent(buildupData.username)}`
 
