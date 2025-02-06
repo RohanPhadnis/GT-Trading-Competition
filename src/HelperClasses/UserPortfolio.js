@@ -2,6 +2,7 @@ class UserPortfolio {
     constructor() {
         this.data = {
             balance: 0,
+            pnl: 0,
             positions: {},
             username: null,
             Orders: []
@@ -34,16 +35,18 @@ class UserPortfolio {
             return;
         }
 
-        const { Orders, balance, positions, username } = message;
+        const { Orders, balance, pnl, positions, username } = message;
 
         if (balance !== undefined) {
             this.data.balance = balance;
         }
-
+        if (pnl !== undefined) {
+            this.data.pnl = pnl;
+            console.log(pnl);
+        }
         if (positions && typeof positions === "object") {
             this.data.positions = {...this.data.positions, ...positions };
         }
-
         if (username) { //
             this.data.username = username;
         }
