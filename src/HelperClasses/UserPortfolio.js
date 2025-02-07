@@ -2,8 +2,10 @@ class UserPortfolio {
     constructor() {
         this.data = {
             balance: 0,
+            pnl: 0,
             positions: {},
             username: null,
+            Orders: []
         };
         this.subscribers = [];
     }
@@ -27,27 +29,41 @@ class UserPortfolio {
 
     // Update portfolio and notify subscribers
     updatePortfolio(message) {
+        console.log(message);
         if (!message || typeof message !== "object") {
             console.error("Invalid message format:", message);
             return;
         }
 
-        const { balance, positions, username } = message;
+        const { Orders, balance, pnl, positions, username } = message;
 
         if (balance !== undefined) {
             this.data.balance = balance;
         }
-
+        if (pnl !== undefined) {
+            this.data.pnl = pnl;
+            console.log(pnl);
+        }
         if (positions && typeof positions === "object") {
             this.data.positions = {...this.data.positions, ...positions };
         }
-
-        if (username) {
+        if (username) { //
             this.data.username = username;
+        }
+        if (Orders && typeof Orders === "object") {
+            let orderList = [];
+            Object.keys(Orders).forEach((ticker) => {
+                Orders[ticker].forEach((order) => {
+                    orderList.push({...order, ticker });
+                });
+            });
+            this.data.Orders = orderList;
+        } else {
+            this.data.Orders = [];
         }
 
         this._notifySubscribers(); // Notify on updates
-        console.log("Portfolio updated:", this.data);
+        //console.log("Portfolio updated:", this.data);
     }
 
     getPortfolio() {

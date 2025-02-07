@@ -16,7 +16,7 @@ const AuthPage = () => {
                 let data = getBuildupData();
                 console.log("📦 Retrieved buildupData:", data);
 
-                if (data && data.success && data.auth) {
+                if (data && data.message === "Success!") {
                     setAuth(true);
                     console.log("✅ Authentication successful for:", data.username);
                     navigate("/dashboard");
@@ -60,4 +60,4 @@ const AuthPage = () => {
             );
         };
 
-        export default AuthPage;
+export default AuthPage;

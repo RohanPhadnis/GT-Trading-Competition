@@ -7,10 +7,11 @@ import OrderBookWidget from "../widgets/OrderBookWidgetss.js";
 import ImageDisplayWidget from "../widgets/ImageDisplayWidget.js";
 import AuctionWidget from "../widgets/AuctionWidget.js";
 import EquitiesDashboard from "../widgets/EquityDashboard.js"
-import ChartWidget from "../widgets/ChartWidget.js";
-
+import { getTickers } from "../HelperClasses/api.js";
+import MessageViewer from "../widgets/MessageViewer"
 const NewDashboard = () => {
-    const [selectedStock, setSelectedStock] = useState("AAPL");
+    const [selectedStock, setSelectedStock] = useState(getTickers()[0]);
+
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
@@ -37,41 +38,29 @@ const NewDashboard = () => {
                     <AuctionWidget/>
                 </div>
 
-                { /* LOGO WIDGET */ }
-                <div className = "widget team-logo">
-                    <ImageDisplayWidget/>
-                </div> 
+        { /* TRADE TABLE */ } <
+        div className = "New Trade Table" >
+        <
+        NewTradeTable / >
+            <MessageViewer />
+        <
+        /div> < /
+        div >
 
             </div>
 
             { /* COLUMN 2 */ }
 
-            <div className = "column-2"> 
-
-                { /* CURRENT POSITION WIDGET */ } 
-                <div className = "widget position-info"> 
-                <PlaceOrdersWidget selectedStock = { selectedStock }/> 
-                </div>
-
-                {/** Chart Widget */}
-                <div className = "">
-                    <ChartWidget/>
-                </div>
-
-                { /* TRADE TABLE */ }
-                <div className = "widget trade-table" >
-                    <NewTradeTable/>
-                </div>
-
-            </div>
-
-            {/* COLUMN 3*/}
-            <div className = "column-3">
-                <div className="widget order-book">
-                    <OrderBookWidget/>
-                </div>
-            </div>
-        </div>
+        { /* CONTEST DASHBOARD (COMMENTED OUT, UNCOMMENT IF NEEDED) */ } {
+            /* 
+                            <div className="widget contest-info">
+                                Contest Information
+                                <Contestdash />
+                            </div>
+                        */
+        }
+        <
+        /div>
     );
 };
 
