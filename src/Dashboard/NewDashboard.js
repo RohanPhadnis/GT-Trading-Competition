@@ -8,6 +8,7 @@ import ImageDisplayWidget from "../widgets/ImageDisplayWidget.js";
 import AuctionWidget from "../widgets/AuctionWidget.js";
 import EquitiesDashboard from "../widgets/EquityDashboard.js"
 import { getTickers } from "../HelperClasses/api.js";
+import MessageViewer from "../widgets/MessageViewer"
 const NewDashboard = () => {
     const [selectedStock, setSelectedStock] = useState(getTickers()[0]);
 
@@ -55,6 +56,7 @@ const NewDashboard = () => {
         div className = "New Trade Table" >
         <
         NewTradeTable / >
+            <MessageViewer />
         <
         /div> < /
         div >
@@ -85,7 +87,8 @@ const NewDashboard = () => {
                                 <Contestdash />
                             </div>
                         */
-        } <
+        }
+        <
         /div>
     );
 };
