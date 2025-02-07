@@ -15,7 +15,7 @@ const AuthPage = () => {
                 let data = getBuildupData();
                 console.log("📦 Retrieved buildupData:", data);
 
-                if (data && data.success && data.auth) {
+                if (data && data.message === "Success!") {
                     setAuth(true);
                     console.log("✅ Authentication successful for:", data.username);
                     navigate("/dashboard");
@@ -63,9 +63,10 @@ const AuthPage = () => {
             button onClick = { handleSubmit } > Submit < /button>
 
             {
-                auth && < p > ✅Authentication Succeeded!Redirecting... < /p>} {!auth && subscribeVar > 0 && < p > ❌Authentication Failed < /p>} {
+                auth && < p > ✅Authentication Succeeded!Redirecting... < /p>} {!auth && subscribeVar > 0 && < p > ❌Authentication Failed < /p >
+            } {
                 error && < p className = "error" > { error } < /p>} < /
-                    div >
+                div >
             );
         };
 

@@ -6,13 +6,14 @@ const NewTradeTable = () => {
     const [balance, setBalance] = useState(0);
     const [positions, setPositions] = useState({});
     const [openOrders, setOpenOrders] = useState([]);
-
+    const [pnl, setPnl] = useState(0);
     useEffect(() => {
         // Subscribe to updates from userPortfolio
         const handlePortfolioUpdate = (portfolioData) => {
             setBalance(portfolioData.balance || 0);
             setPositions(portfolioData.positions || {});
             setOpenOrders(portfolioData.Orders || []);
+            setPnl(portfolioData.pnl || 0);
         };
 
         userPortfolio.subscribe(handlePortfolioUpdate);
@@ -33,7 +34,13 @@ const NewTradeTable = () => {
 
     };
     return ( <
-        div className = "pnl-dashboard" > { /* Balance Display */ } <
+        div className = "pnl-dashboard" > { /* PNL Display */ } <
+        div className = "pnl-section" >
+        <
+        h2 > PNL: $ { pnl.toFixed(2) } < /h2> < /
+        div >
+
+        { /* Balance Display */ } <
         div className = "balance-section" >
         <
         h2 > Balance: $ { balance.toFixed(2) } < /h2> < /
@@ -134,6 +141,7 @@ const NewTradeTable = () => {
         /div> < /
         div >
     );
+
 };
 
 export default NewTradeTable;

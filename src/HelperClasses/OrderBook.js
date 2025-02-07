@@ -92,7 +92,7 @@ class OrderBook {
     updateVolumes(updates) {
         updates.forEach(({ ticker, price, side, volume }) => {
             const sideKey = side.toLowerCase() === 'bid' ? 'bidVolumes' : 'askVolumes';
-            console.log(ticker, price, side, volume);
+            //console.log(ticker, price, side, volume);
 
             // Ensure the ticker exists
             if (!this.orderBooks[ticker]) {
