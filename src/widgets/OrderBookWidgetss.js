@@ -67,57 +67,55 @@ const OrderBookWidget = ({ selectedStock }) => {
             .map(([price, quantity]) => ({ P: parseFloat(price), Q: quantity }))
             .sort((a, b) => a.P - b.P); // Sort asks low-to-high
 
-        return ( <
-            div className = "order-book-widget" >
-            <
-            h4 > Order Book
-            for { selectedStock } < /h4>
-
-            { /* If no order book is available, display "Empty Order Book" */ } {
-                !hasOrderBook || (sortedBids.length === 0 && sortedAsks.length === 0) ? ( <
-                    p className = "empty-order-book" > Empty Order Book < /p>
-                ) : ( <
-                    >
-                    { /* Column Headers */ } <
-                    div className = "column-headers" >
-                    <
-                    span className = "header price-header" > Price < /span> <
-                    span className = "header quantity-header" > Quantity < /span> <
-                    span className = "header orders-header" > Orders < /span> < /
-                    div >
-
-                    { /* Bids Section */ } <
-                    h5 className = "bids-label" > Bids < /h5> {
-                    sortedBids.length > 0 ? (
-                        sortedBids.map((bid, index) => ( <
-                            PriceLevelWidget key = { `bid-${index}` }
-                            price = { bid.P }
-                            quantity = { bid.Q }
-                            orders = "-" / >
-                        ))
-                    ) : ( <
-                        p className = "empty-section" > No bids available < /p>
-                    )
-                }
-
-                { /* Asks Section */ } <
-                h5 className = "asks-label" > Asks < /h5> {
-                sortedAsks.length > 0 ? (
-                    sortedAsks.map((ask, index) => ( <
-                        PriceLevelWidget key = { `ask-${index}` }
-                        price = { ask.P }
-                        quantity = { ask.Q }
-                        orders = "-" / >
+        return (
+            <div className="order-book-widget">
+                <h4>Order Book for {selectedStock}</h4>
+            
+                { /* Conditional rendering for order book */ }
+                {!hasOrderBook || (sortedBids.length === 0 && sortedAsks.length === 0) ? (
+                <p className="empty-order-book">Empty Order Book</p>
+                ) : (
+                <>
+                    { /* Column Headers */ }
+                    <div className="column-headers">
+                    <span className="header price-header">Price</span>
+                    <span className="header quantity-header">Quantity</span>
+                    <span className="header orders-header">Orders</span>
+                    </div>
+            
+                    { /* Bids Section */ }
+                    <h5 className="bids-label">Bids</h5>
+                    {sortedBids.length > 0 ? (
+                    sortedBids.map((bid, index) => (
+                        <PriceLevelWidget
+                        key={`bid-${index}`}
+                        price={bid.P}
+                        quantity={bid.Q}
+                        orders="-"
+                        />
                     ))
-                ) : ( <
-                    p className = "empty-section" > No asks available < /p>
-                )
-            } <
-            />
-        )
-    } <
-    /div>
-);
-};
+                    ) : (
+                    <p className="empty-section">No bids available</p>
+                    )}
+            
+                    { /* Asks Section */ }
+                    <h5 className="asks-label">Asks</h5>
+                    {sortedAsks.length > 0 ? (
+                    sortedAsks.map((ask, index) => (
+                        <PriceLevelWidget
+                        key={`ask-${index}`}
+                        price={ask.P}
+                        quantity={ask.Q}
+                        orders="-"
+                        />
+                    ))
+                    ) : (
+                    <p className="empty-section">No asks available</p>
+                    )}
+                </>
+                )}
+            </div>
+         );
+    }  
 
 export default OrderBookWidget;

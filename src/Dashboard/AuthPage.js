@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { buildupHandler, getBuildupData } from "../HelperClasses/api.js";
+import "./AuthPage.css";
 
 const AuthPage = () => {
         const [username, setUsername] = useState("");
@@ -41,31 +42,21 @@ const AuthPage = () => {
             buildupHandler({ username, apiKey }, setSubscribeVar);
         };
 
-        return ( <
-            div className = "auth-page" >
-            <
-            h2 > Authentication Required < /h2> <
-            p > Please enter your credentials to proceed. < /p>
+        return (
+            <div className = "auth-page" >
+                <h2 className="authentication-text"> Authentication Required </h2>
+                <p> Please enter your credentials to proceed. </p>
 
-            <
-            input type = "text"
-            value = { username }
-            onChange = { handleUsernameChange }
-            placeholder = "Your username" /
-            >
-            <
-            input type = "password"
-            value = { apiKey }
-            onChange = { handleApiKeyChange }
-            placeholder = "Your API Authentication Key" /
-            >
-            <
-            button onClick = { handleSubmit } > Submit < /button>
+                <input type = "text" value = { username } onChange = { handleUsernameChange } placeholder = "Your username"/>
+                <input type = "password" value = { apiKey } onChange = { handleApiKeyChange } placeholder = "Your API Authentication Key"/>
+            
+                <button onClick = { handleSubmit }> Submit </button>
 
-            {
-                auth && < p > ✅Authentication Succeeded!Redirecting... < /p>} {!auth && subscribeVar > 0 && < p > ❌Authentication Failed < /p>} {
-                error && < p className = "error" > { error } < /p>} < /
-                    div >
+                {auth && <p> ✅Authentication Succeeded!Redirecting... </p>} 
+                {!auth && subscribeVar > 0 && < p > ❌Authentication Failed </p>}
+                {error && <p className = "error"> { error } </p>} 
+            
+            </div>
             );
         };
 

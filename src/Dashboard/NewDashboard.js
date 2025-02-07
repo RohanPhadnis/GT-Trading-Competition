@@ -7,6 +7,8 @@ import OrderBookWidget from "../widgets/OrderBookWidgetss.js";
 import ImageDisplayWidget from "../widgets/ImageDisplayWidget.js";
 import AuctionWidget from "../widgets/AuctionWidget.js";
 import EquitiesDashboard from "../widgets/EquityDashboard.js"
+import ChartWidget from "../widgets/ChartWidget.js";
+
 const NewDashboard = () => {
     const [selectedStock, setSelectedStock] = useState("AAPL");
     const [orders, setOrders] = useState([]);
@@ -18,73 +20,58 @@ const NewDashboard = () => {
         setOrders(filteredOrders);
     }, [selectedStock]);
 
-    return ( <
-        div className = "dashboard" > { /* COLUMN 1 */ } <
-        div className = "column-1" > { /* AUCTION WIDGET */ } <
-        div className = "Equities Dashboard" > < EquitiesDashboard selectedStock = { selectedStock }
-        setSelectedStock = { setSelectedStock }
-        />< /div >
+    return (
+        <div className = "dashboard"> 
 
-        <
-        div className = "widget auctionWidget" >
-        <
-        AuctionWidget / >
-        <
-        /div>
+            { /* COLUMN 1 */ }
 
-        { /* LOGO WIDGET */ } <
-        div className = "widget team-logo" >
-        <
-        ImageDisplayWidget / >
-        <
-        /div> < /
-        div >
+            <div className = "column-1"> 
 
-        { /* COLUMN 2 */ } <
-        div className = "column-2" > { /* CURRENT POSITION WIDGET */ } <
-        div className = "widget position-info" >
-        <
-        PlaceOrdersWidget selectedStock = { selectedStock }
-        /> < /
-        div >
+                { /* LIST OF EQUITIES */ }
+                <div className = "Equities Dashboard" > <EquitiesDashboard selectedStock = { selectedStock }
+                    setSelectedStock = { setSelectedStock }/>
+                </div>
 
+                { /* AUCTION WIDGET */ }
+                <div className = "widget auctionWidget">
+                    <AuctionWidget/>
+                </div>
 
-        { /* TRADE TABLE */ } <
-        div className = "New Trade Table" >
-        <
-        NewTradeTable / >
-        <
-        /div> < /
-        div >
+                { /* LOGO WIDGET */ }
+                <div className = "widget team-logo">
+                    <ImageDisplayWidget/>
+                </div> 
 
-        { /* COLUMN 3 */ } <
-        div className = "column-3" > { /* ORDER BOOK WIDGET */ } <
-        div className = "widget order-book" >
-        <
-        OrderBookWidget selectedStock = { selectedStock }
-        orders = { orders }
-        /> < /
-        div > <
-        /div>
+            </div>
 
-        { /* RECENT ORDERS WIDGET (COMMENTED OUT, UNCOMMENT IF NEEDED) */ } {
-            /* 
-                            <div className="widget recent-orders">
-                                Open Orders
-                                <RecentOrdersWidget orders={orders} />
-                            </div>
-                        */
-        }
+            { /* COLUMN 2 */ }
 
-        { /* CONTEST DASHBOARD (COMMENTED OUT, UNCOMMENT IF NEEDED) */ } {
-            /* 
-                            <div className="widget contest-info">
-                                Contest Information
-                                <Contestdash />
-                            </div>
-                        */
-        } <
-        /div>
+            <div className = "column-2"> 
+
+                { /* CURRENT POSITION WIDGET */ } 
+                <div className = "widget position-info"> 
+                <PlaceOrdersWidget selectedStock = { selectedStock }/> 
+                </div>
+
+                {/** Chart Widget */}
+                <div className = "">
+                    <ChartWidget/>
+                </div>
+
+                { /* TRADE TABLE */ }
+                <div className = "widget trade-table" >
+                    <NewTradeTable/>
+                </div>
+
+            </div>
+
+            {/* COLUMN 3*/}
+            <div className = "column-3">
+                <div className="widget order-book">
+                    <OrderBookWidget/>
+                </div>
+            </div>
+        </div>
     );
 };
 

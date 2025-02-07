@@ -86,47 +86,6 @@ const Dashboard = () => {
             </p> 
         </div>
 
-
-        { /* AUCTION WIDGET */ } <
-        div className = "widget auctionWidget" >
-        <
-        AuctionWidget / >
-        <
-        /div>  { / * LOGO WIDGET * / } <
-        div className = "widget team-logo" >
-        <
-        ImageDisplayWidget / >
-        <
-        /div> </div >
-
-        <
-        div className = "column-2" > { /* CURRENT POSITION WIDGET */ } <
-        div className = "widget position-info" >
-        <
-        PlaceOrdersWidget selectedStock = { selectedStock }
-        /> < /
-        div >
-
-        <
-        /
-        div > { /* TRADE TABLE */ } <
-        div className = "widget trade-table" >
-        <
-        TradeTable / >
-        <
-        /div> < /
-        div >
-
-        <
-        div className = "column-3" > { /* ORDER BOOK WIDGET */ } <
-        div className = "widget order-book" >
-        <
-        OrderBookWidget selectedStock = { selectedStock }
-        orders = { orders }
-        /> < /
-        div > <
-        /div>
-
         { /* RECENT ORDERS WIDGET (COMMENTED OUT, UNCOMMENT IF NEEDED) */ } {
             /* 
                         <div className="widget recent-orders">
@@ -143,8 +102,9 @@ const Dashboard = () => {
                             <Contestdash />
                         </div>
                         */
-        } <
-        /div>
+        }
+        </div>
+        </div>
     );
 };
 
