@@ -1,7 +1,12 @@
 import socketManager from "../HelperClasses/SocketManager";
 import orderBookInstance from "./OrderBook";
-const URI = "http://ec2-13-59-143-196.us-east-2.compute.amazonaws.com:8080";
+import {controls} from "./controls";
+//const URI = "http://ec2-13-59-143-196.us-east-2.compute.amazonaws.com:8080";
 //const URI = "http://localhost:8080"
+const URI = "http://ec2-3-16-107-184.us-east-2.compute.amazonaws.com:8080"
+
+let messages = [];
+
 class AsyncAPICall {
     path;
     dependency;
@@ -37,13 +42,19 @@ class AsyncAPICall {
                 },
                 body: JSON.stringify(form)
             })
-            .then((data) => {
-                console.log(data.status);
-                return data.json();
+            .then(async(data) => {
+                console.log(`Request to ${this.path} - Status:`, data.status); // Log response status
+                const jsonResponse = await data.json();
+                console.log(`Response from ${this.path}:`, jsonResponse); // Log full API response
+                messages.push({text: this.path + ": " + jsonResponse.message, status: data.status});
+                return jsonResponse;
             });
+
         this.data = await promise;
         this.data = {...this.data, ...form };
         this.counter++;
+        controls.messageCount++;
+        controls.messageSubscriber(controls.messageCount);
         this.subscriber(this.counter);
     }
 
@@ -130,4 +141,7 @@ export function getMarketOrderData() {
 }
 export function getTickers() {
     return Array.isArray(tickers) && tickers.length > 0 ? [...tickers] : [];
+}
+export function getMessageList() {
+    return messages;
 }
