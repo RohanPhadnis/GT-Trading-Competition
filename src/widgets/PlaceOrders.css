@@ -24,7 +24,7 @@
 .buy-button,
 .sell-button {
     width: 120px; /* Same width for all elements */
-    height: 45px; /* Same height for all elements */
+    height: 25px; /* Same height for all elements */
     text-align: center;
     font-size: 16px; /* Consistent font size */
     font-weight: bold;

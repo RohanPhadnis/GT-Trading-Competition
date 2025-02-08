@@ -65,54 +65,36 @@ const PlaceOrdersWidget = ({ selectedStock }) => {
         console.log(`🔴 Sell order placed for ${amount} shares of ${selectedStock} at ${price || "market price"}.`);
     };
 
-    return ( <
-        div className = "widget-container" >
-        <
-        h3 > Trade { selectedStock || "Stock" } < /h3> <
-        div className = "buy-sell-row" >
-        <
-        div className = "input-group" >
-        <
-        label htmlFor = "volume" > Volume: < /label> <
-        input id = "volume"
-        type = "number"
-        className = { `quantity-input ${amount === 0 ? "placeholder-visible" : ""}` }
-        value = { amount }
-        onChange = {
-            (e) => setAmount(Number(e.target.value))
-        }
-        placeholder = "Enter Quantity" /
-        >
-        <
-        /div>
+    return (
+        <div className = "widget-container">
+            <h3> Trade { selectedStock || "Stock" } </h3>
+            <div className = "buy-sell-row">
 
-        <
-        button className = "buy-button"
-        onClick = { handleBuy } >
-        Buy <
-        /button> <
-        button className = "sell-button"
-        onClick = { handleSell } >
-        Sell <
-        /button>
+                <div className = "input-group" >
+        
+                <label htmlFor = "volume" > Volume: </label>
+                <input id = "volume" type = "number" className = { `quantity-input ${amount === 0 ? "placeholder-visible" : ""}` } value = { amount } onChange = {
+                    (e) => setAmount(Number(e.target.value))
+                    } placeholder = "Enter Quantity"/>
+                </div>
 
-        <
-        div className = "input-group" >
-        <
-        label htmlFor = "price" > Price: < /label> <
-        input id = "price"
-        type = "number"
-        className = { `price-input ${!price || Number(price) === 0 ? "placeholder-visible" : ""}` }
-        value = { price }
-        onChange = {
-            (e) => setPrice(Number(e.target.value))
-        }
-        placeholder = "For Limit Orders Only" /
-        >
-        <
-        /div> < /
-        div > <
-        /div>
+                <button className = "buy-button" onClick = { handleBuy }>
+                    Buy 
+                </button> 
+
+                <button className = "sell-button" onClick = { handleSell } >
+                    Sell 
+                </button>
+
+                <div className = "input-group">
+                    <label htmlFor = "price" > Price: </label>
+                    <input id = "price" type = "number" className = { `price-input ${!price || Number(price) === 0 ? "placeholder-visible" : ""}` } value = { price } onChange = {
+                        (e) => setPrice(Number(e.target.value))
+                    } placeholder = "For Limit Orders Only"/>
+                </div>
+
+            </div> 
+        </div>
     );
 };
 

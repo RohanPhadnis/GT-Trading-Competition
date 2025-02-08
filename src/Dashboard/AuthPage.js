@@ -52,12 +52,12 @@ const AuthPage = () => {
             
                 <button onClick = { handleSubmit }> Submit </button>
 
-                {auth && <p> ✅Authentication Succeeded!Redirecting... </p>} 
-                {!auth && subscribeVar > 0 && < p > ❌Authentication Failed </p>}
-                {error && <p className = "error"> { error } </p>} 
-            
+                {
+                    auth && <p> ✅Authentication Succeeded!Redirecting... </p>} 
+                    {!auth && subscribeVar > 0 && < p > ❌Authentication Failed </p>
+                }   
+                {error && <p className = "error" > { error } </p>} 
             </div>
-            );
-        };
-
+        );
+};
 export default AuthPage;

@@ -5,6 +5,7 @@ import NewTradeTable from "../widgets/NewTradeTable.js";
 import samplePnlData from "../SampleData/samplePnlData.json";
 import OrderBookWidget from "../widgets/OrderBookWidgetss.js";
 import ImageDisplayWidget from "../widgets/ImageDisplayWidget.js";
+import ChartWidget from "../widgets/ChartWidget.js";
 import AuctionWidget from "../widgets/AuctionWidget.js";
 import EquitiesDashboard from "../widgets/EquityDashboard.js"
 import { getTickers } from "../HelperClasses/api.js";
@@ -29,8 +30,8 @@ const NewDashboard = () => {
             <div className = "column-1"> 
 
                 { /* LIST OF EQUITIES */ }
-                <div className = "Equities Dashboard" > <EquitiesDashboard selectedStock = { selectedStock }
-                    setSelectedStock = { setSelectedStock }/>
+                <div className = "widget equities" > 
+                    <EquitiesDashboard selectedStock = { selectedStock }setSelectedStock = { setSelectedStock }/>
                 </div>
 
                 { /* AUCTION WIDGET */ }
@@ -38,29 +39,36 @@ const NewDashboard = () => {
                     <AuctionWidget/>
                 </div>
 
-        { /* TRADE TABLE */ } <
-        div className = "New Trade Table" >
-        <
-        NewTradeTable / >
-            <MessageViewer />
-        <
-        /div> < /
-        div >
-
             </div>
 
             { /* COLUMN 2 */ }
 
-        { /* CONTEST DASHBOARD (COMMENTED OUT, UNCOMMENT IF NEEDED) */ } {
-            /* 
-                            <div className="widget contest-info">
-                                Contest Information
-                                <Contestdash />
-                            </div>
-                        */
-        }
-        <
-        /div>
+            <div className = "column-2"> 
+
+                { /* CURRENT POSITION WIDGET */ } 
+                <div className = "widget position-info"> 
+                <PlaceOrdersWidget selectedStock = { selectedStock }/> 
+                </div>
+
+                {/** Chart Widget */}
+                <div className = "widget chart">
+                    <ChartWidget/>
+                </div>
+
+                { /* TRADE TABLE */ }
+                <div className = "widget trade-table" >
+                    <NewTradeTable/>
+                </div>
+
+            </div>
+
+            {/* COLUMN 3*/}
+            <div className = "column-3">
+                <div className="widget order-book">
+                    <OrderBookWidget/>
+                </div>
+            </div>
+        </div>
     );
 };
 

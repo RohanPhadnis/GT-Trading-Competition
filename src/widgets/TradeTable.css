@@ -15,6 +15,19 @@
   padding: 16px;
 }
 
+.tables-container {
+  display: flex;
+  gap: 20px; /* Space between tables */
+  justify-content: space-between; /* Ensures tables are spread out evenly */
+  flex-wrap: wrap; /* Ensures responsiveness on smaller screens */
+}
+
+.table-wrapper {
+  flex: 1;
+  min-width: 45%; /* Ensures each table takes at least 45% of the width */
+}
+
+
 .pnl-table-container {
   /* Let this container expand to use leftover space */
   flex: 1;
