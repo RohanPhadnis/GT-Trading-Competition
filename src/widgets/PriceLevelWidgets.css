@@ -26,4 +26,23 @@
   color: #f57c00;
 }
 
+.ask-row {
+  background-color: rgba(255, 76, 76, 0.2);
+}
+
+.bid-row {
+  background-color: rgba(0, 166, 118, 0.2);
+}
+
+.price {
+  color:  white;
+}
+
+.amount {
+  color: white;
+}
+
+.quantity {
+  color: white;
+}
   

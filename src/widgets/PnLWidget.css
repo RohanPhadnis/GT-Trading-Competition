@@ -1,34 +1,33 @@
-/* General Widget Styling */
-.widget.pnl-dashboard {
-  position: relative; /* Prevent overlapping or stacking */
-  background-color: #242323; /* Dark background for a sleek appearance */
-  padding: 5px; /* Slightly increased padding for better spacing */
-  max-width: 350x; /* Slightly larger max width for better alignment */
-  text-align: center; /* Center align text inside */
-  font-family: 'Roboto', sans-serif; /* Consistent font styling */
-  color: #ffffff; /* White text for contrast on dark background */
-  border: none !important; /* Ensure no border is applied */
-  outline: none !important; /* Remove any focus outline */
+.pnl-widget {
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-align: center;
+  width: 100%;
+  transition: background 0.3s ease-in-out;
 }
 
-/* Total PnL Display */
-.total-pnl {
-  font-size: 1.5rem; /* Slightly larger font size for emphasis */
-  font-weight: bold; /* Emphasize the total PnL */
-  background-color: #000000; /* Subtle difference from widget background */
-  padding: 15px; /* Increased padding for balance */
-  border-radius: 8px; /* Smooth corners for consistency */
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* Slight shadow for depth */
+.pnl-positive {
+  background: rgba(0, 255, 0, 0.2); /* Light green for positive PnL */
 }
 
-/* Styling for Positive PnL */
-.positive {
-  color: #2ecc71; /* Bright green to indicate profit */
-  font-weight: bold; /* Highlight the result */
+.pnl-negative {
+  background: rgba(255, 0, 0, 0.2); /* Light red for negative PnL */
 }
 
-/* Styling for Negative PnL */
-.negative {
-  color: #e74c3c; /* Bright red to indicate loss */
-  font-weight: bold; /* Highlight the result */
+.pnl-heading {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6); /* White and translucent */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
 }
+
+.pnl-value {
+  font-size: 36px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.8); /* White and translucent */
+  font-family: "Oswald", sans-serif; /* Tall and narrow font */
+  margin: 0;
+}
+
+

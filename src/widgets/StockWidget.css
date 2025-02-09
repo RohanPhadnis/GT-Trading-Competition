@@ -3,7 +3,7 @@
 
 /* stock-widget CSS styles */
 .stock-widget {
-    width: calc(100%);             
+    width: 100%;             
     background-color: black;
     border-radius: 10px;
     padding: 5px;
@@ -16,12 +16,13 @@
     box-sizing: border-box;
     cursor: pointer;         /* Pointer on hover */
     transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+    height: 100%;
 }
 
 .stock-widget:hover {
   background-color: #333333;
 }
-  
+
 .stock-header {
     display: flex;
     justify-content: space-between;
@@ -61,7 +62,6 @@
 }
 
 .stock-details {
-    margin-top: 5px;
     font-size: 14px;
 }
 

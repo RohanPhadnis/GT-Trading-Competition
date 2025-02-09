@@ -37,11 +37,6 @@ const NewTradeTable = () => {
     return (
         <div className="pnl-dashboard">
 
-            {/* PNL and Balance Display */}
-            <div className="pnl-section">
-                <h5> PNL: ${pnl.toFixed(2)}          Balance: ${balance.toFixed(2)}  </h5>
-            </div>
-
             {/* Flex container for tables */}
             <div className="tables-container">
                 {/* Current Positions Table */}
@@ -53,7 +48,7 @@ const NewTradeTable = () => {
                                 <th>Ticker</th>
                                 <th>Action</th>
                                 <th>Price</th>
-                                <th>Quantity Owned</th>
+                                <th>Quantity</th>
                             </tr>
                         </thead>
                         <tbody>

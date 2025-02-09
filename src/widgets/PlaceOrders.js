@@ -66,36 +66,49 @@ const PlaceOrdersWidget = ({ selectedStock }) => {
     };
 
     return (
-        <div className = "widget-container">
-            <h3> Trade { selectedStock || "Stock" } </h3>
-            <div className = "buy-sell-row">
+        <div className="widget-container">
+            <h3> Trade {selectedStock || "Stock"} </h3>
+            <div className="buy-sell-row">
 
-                <div className = "input-group" >
-        
-                <label htmlFor = "volume" > Volume: </label>
-                <input id = "volume" type = "number" className = { `quantity-input ${amount === 0 ? "placeholder-visible" : ""}` } value = { amount } onChange = {
-                    (e) => setAmount(Number(e.target.value))
-                    } placeholder = "Enter Quantity"/>
+                <div className="input-group">
+                    <label htmlFor="volume"> Volume: </label>
+                    <input
+                        id="volume"
+                        type="number"
+                        className={`quantity-input ${amount === 0 || amount === "" ? "placeholder-visible" : ""}`}
+                        value={amount === "" ? "" : amount}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            setAmount(value === "" ? "" : Number(value)); // Only convert to number if it's not an empty string
+                        }}
+                        placeholder="Enter Quantity"
+                    />
                 </div>
 
-                <button className = "buy-button" onClick = { handleBuy }>
+                <button className="buy-button" onClick={handleBuy}>
                     Buy 
                 </button> 
 
-                <button className = "sell-button" onClick = { handleSell } >
+                <button className="sell-button" onClick={handleSell}>
                     Sell 
                 </button>
 
-                <div className = "input-group">
-                    <label htmlFor = "price" > Price: </label>
-                    <input id = "price" type = "number" className = { `price-input ${!price || Number(price) === 0 ? "placeholder-visible" : ""}` } value = { price } onChange = {
-                        (e) => setPrice(Number(e.target.value))
-                    } placeholder = "For Limit Orders Only"/>
+                <div className="input-group">
+                    <label htmlFor="price"> Price: </label>
+                    <input
+                        id="price"
+                        type="number"
+                        className={`price-input ${!price && price !== 0 ? "placeholder-visible" : ""}`}
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)} // Keep as string to handle empty input case
+                        placeholder="For Limit Orders Only"
+                    />
                 </div>
 
-            </div> 
+            </div>
         </div>
     );
 };
 
 export default PlaceOrdersWidget;
+

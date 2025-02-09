@@ -10,6 +10,9 @@ import AuctionWidget from "../widgets/AuctionWidget.js";
 import EquitiesDashboard from "../widgets/EquityDashboard.js"
 import { getTickers } from "../HelperClasses/api.js";
 import MessageViewer from "../widgets/MessageViewer"
+import PnLWidget from "../widgets/PnLWidget.js";
+import RealizedPnLWidget from "../widgets/realisedPnLWidget.js";
+
 const NewDashboard = () => {
     const [selectedStock, setSelectedStock] = useState(getTickers()[0]);
 
@@ -29,6 +32,11 @@ const NewDashboard = () => {
 
             <div className = "column-1"> 
 
+                { /** PNL WIDGET */}
+                <div className = "widget pnl-Widget">
+                    <PnLWidget/>
+                </div>
+
                 { /* LIST OF EQUITIES */ }
                 <div className = "widget equities" > 
                     <EquitiesDashboard selectedStock = { selectedStock }setSelectedStock = { setSelectedStock }/>
@@ -37,6 +45,11 @@ const NewDashboard = () => {
                 { /* AUCTION WIDGET */ }
                 <div className = "widget auctionWidget">
                     <AuctionWidget/>
+                </div>
+
+                { /** REALISED PNL WIDGET */}
+                <div className = "widget pnl-Widget">
+                    <RealizedPnLWidget/>
                 </div>
 
             </div>
@@ -65,7 +78,7 @@ const NewDashboard = () => {
             {/* COLUMN 3*/}
             <div className = "column-3">
                 <div className="widget order-book">
-                    <OrderBookWidget/>
+                <OrderBookWidget selectedStock={selectedStock}/>
                 </div>
             </div>
         </div>

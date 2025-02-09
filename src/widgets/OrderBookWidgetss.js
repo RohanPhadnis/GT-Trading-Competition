@@ -7,42 +7,68 @@ const OrderBookWidget = ({ selectedStock }) => {
     const [stockData, setStockData] = useState({ bidVolumes: {}, askVolumes: {} });
     const [hasOrderBook, setHasOrderBook] = useState(false);
 
-    const updateStockData = useCallback((orderBooks) => {
-        if (orderBooks[selectedStock]) {
-            setStockData({
-                bidVolumes: { ...orderBooks[selectedStock].bidVolumes },
-                askVolumes: { ...orderBooks[selectedStock].askVolumes },
-            });
-            setHasOrderBook(true);
-        } else {
-            setStockData({ bidVolumes: {}, askVolumes: {} });
-            setHasOrderBook(false);
-        }
-    }, [selectedStock]);
+    // Debugging: Log when the component renders or updates
+    console.log(`🔄 Component rendered for selectedStock: ${selectedStock}`);
+
+    const updateStockData = useCallback(
+        (orderBooks) => {
+            // Debugging: Log the data being received
+            console.log("📈 updateStockData called with:", orderBooks);
+
+            if (orderBooks[selectedStock]) {
+                console.log(`✅ Found data for selectedStock: ${selectedStock}`);
+                console.log("🔹 Updated bidVolumes:", orderBooks[selectedStock].bidVolumes);
+                console.log("🔹 Updated askVolumes:", orderBooks[selectedStock].askVolumes);
+
+                setStockData({
+                    bidVolumes: { ...orderBooks[selectedStock].bidVolumes },
+                    askVolumes: { ...orderBooks[selectedStock].askVolumes },
+                });
+                setHasOrderBook(true);
+            } else {
+                console.log(`⚠️ No data found for selectedStock: ${selectedStock}`);
+                setStockData({ bidVolumes: {}, askVolumes: {} });
+                setHasOrderBook(false);
+            }
+        },
+        [selectedStock]
+    );
 
     useEffect(() => {
+        // Subscribe to order book updates
+        console.log(`🟢 Subscribing to updates for selectedStock: ${selectedStock}`);
         orderBookInstance.subscribe(updateStockData);
 
+        // Initialize with current data
         if (orderBookInstance.orderBooks[selectedStock]) {
+            console.log(`📊 Initial data found for selectedStock: ${selectedStock}`);
+            console.log("🔹 Initial bidVolumes:", orderBookInstance.orderBooks[selectedStock].bidVolumes);
+            console.log("🔹 Initial askVolumes:", orderBookInstance.orderBooks[selectedStock].askVolumes);
+
             setStockData({
                 bidVolumes: { ...orderBookInstance.orderBooks[selectedStock].bidVolumes },
                 askVolumes: { ...orderBookInstance.orderBooks[selectedStock].askVolumes },
             });
             setHasOrderBook(true);
         } else {
+            console.log(`⚠️ No initial data for selectedStock: ${selectedStock}`);
             setStockData({ bidVolumes: {}, askVolumes: {} });
             setHasOrderBook(false);
         }
 
+        // Cleanup: Unsubscribe on unmount or stock change
         return () => {
             console.log(`🔴 Unsubscribing OrderBookWidget for ${selectedStock}`);
-            orderBookInstance.unsubscribe(updateStockData);
+            orderBookInstance.unsubscribe(updateStockData); // Avoid memory leaks
         };
     }, [selectedStock, updateStockData]);
 
     useEffect(() => {
+        // Periodically log the current stock data for debugging
         const logInterval = setInterval(() => {
-            console.log(`📊 Order Book for ${selectedStock}:`, stockData);
+            console.log(`📊 Periodic log for selectedStock: ${selectedStock}`);
+            console.log("🔹 Current bidVolumes:", stockData.bidVolumes);
+            console.log("🔹 Current askVolumes:", stockData.askVolumes);
         }, 5000);
 
         return () => clearInterval(logInterval);
@@ -52,11 +78,11 @@ const OrderBookWidget = ({ selectedStock }) => {
 
     const sortedBids = Object.entries(bidVolumes)
         .map(([price, quantity]) => ({ P: parseFloat(price), Q: quantity }))
-        .sort((a, b) => b.P - a.P);
+        .sort((a, b) => b.P - a.P); // Sorted from highest to lowest
 
     const sortedAsks = Object.entries(askVolumes)
         .map(([price, quantity]) => ({ P: parseFloat(price), Q: quantity }))
-        .sort((a, b) => a.P - b.P);
+        .sort((a, b) => b.P - a.P); // Sorted from highest to lowest
 
     return (
         <div className="order-book-widget">
@@ -66,37 +92,39 @@ const OrderBookWidget = ({ selectedStock }) => {
             ) : (
                 <>
                     <div className="column-headers">
-                        <span className="header price-header">Price</span>
-                        <span className="header quantity-header">Quantity</span>
-                        <span className="header orders-header">Orders</span>
+                        <span className="header price-header"> Price </span>
+                        <span className="header quantity-header"> Quantity </span>
+                        <span className="header orders-header"> Amount </span>
                     </div>
                     <div className="order-book-scrollable">
-                        <h5 className="bids-label">Bids</h5>
-                        {sortedBids.slice(0, 5).length > 0 ? (
-                            sortedBids.slice(0, 5).map((bid, index) => (
-                                <PriceLevelWidget
-                                    key={`bid-${index}`}
-                                    price={bid.P}
-                                    quantity={bid.Q}
-                                    orders="-"
-                                />
-                            ))
-                        ) : (
-                            <p className="empty-section">No bids available</p>
-                        )}
-
-                        <h5 className="asks-label">Asks</h5>
-                        {sortedAsks.slice(0, 5).length > 0 ? (
-                            sortedAsks.slice(0, 5).map((ask, index) => (
+                        {/* Asks */}
+                        {sortedAsks.length > 0 ? (
+                            sortedAsks.map((ask, index) => (
                                 <PriceLevelWidget
                                     key={`ask-${index}`}
                                     price={ask.P}
                                     quantity={ask.Q}
-                                    orders="-"
+                                    amount={ask.P * ask.Q}
+                                    className="ask-row"
                                 />
                             ))
                         ) : (
                             <p className="empty-section">No asks available</p>
+                        )}
+
+                        {/* Bids */}
+                        {sortedBids.length > 0 ? (
+                            sortedBids.map((bid, index) => (
+                                <PriceLevelWidget
+                                    key={`bid-${index}`}
+                                    price={bid.P}
+                                    quantity={bid.Q}
+                                    amount={bid.Q * bid.P}
+                                    className="bid-row"
+                                />
+                            ))
+                        ) : (
+                            <p className="empty-section">No bids available</p>
                         )}
                     </div>
                 </>
@@ -106,3 +134,4 @@ const OrderBookWidget = ({ selectedStock }) => {
 };
 
 export default OrderBookWidget;
+
