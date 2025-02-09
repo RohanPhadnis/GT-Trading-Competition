@@ -5,6 +5,14 @@ import {controls} from "./controls";
 //const URI = "http://localhost:8080"
 const URI = "http://ec2-3-16-107-184.us-east-2.compute.amazonaws.com:8080"
 
+export const HTTPStatusCodes = Object.freeze({
+    OK: 200,
+    BAD_REQUEST: 400,
+    UNAUTHORIZED: 401,
+    LOCKED: 423,
+    TOO_MANY_REQUESTS: 429,
+});
+
 let messages = [];
 
 class AsyncAPICall {
@@ -45,6 +53,7 @@ class AsyncAPICall {
             .then(async(data) => {
                 console.log(`Request to ${this.path} - Status:`, data.status); // Log response status
                 const jsonResponse = await data.json();
+                jsonResponse['status'] = data.status;
                 console.log(`Response from ${this.path}:`, jsonResponse); // Log full API response
                 messages.push({text: this.path + ": " + jsonResponse.message, status: data.status});
                 return jsonResponse;
@@ -52,6 +61,10 @@ class AsyncAPICall {
 
         this.data = await promise;
         this.data = {...this.data, ...form };
+        if (this.path === '/buildup') {
+            localStorage.setItem("username", this.data.username);
+            localStorage.setItem("apiKey", this.data.apiKey);
+        }
         this.counter++;
         controls.messageCount++;
         controls.messageSubscriber(controls.messageCount);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import StockWidget from "../widgets/StockWidget.js";
 import AuthenticationInput from "../widgets/AuthenticationInput.js";
@@ -14,7 +15,6 @@ import OrderBookWidget from "../widgets/OrderBookWidgetss.js";
 import ImageDisplayWidget from "../widgets/ImageDisplayWidget.js";
 import PnLDashBoard from "../widgets/PnLWidget.js";
 import AuctionWidget from "../widgets/AuctionWidget.js";
-import { getTickers } from "../HelperClasses/api.js"; // Import getTickers()
 import ErrorBoundary from "./ErrorBoundary"
 
 const Dashboard = () => {
