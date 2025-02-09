@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { buildupHandler, getBuildupData } from "../HelperClasses/api.js";
+import { buildupHandler, getBuildupData, HTTPStatusCodes } from "../HelperClasses/api.js";
 import "./AuthPage.css";
+
+let initialized = false;
 
 const AuthPage = () => {
         const [username, setUsername] = useState("");
@@ -9,14 +11,31 @@ const AuthPage = () => {
         const [subscribeVar, setSubscribeVar] = useState(0);
         const [auth, setAuth] = useState(false);
         const [error, setError] = useState(null);
+        const [initializedState, setInitializedState] = useState(false);
+        const [cache, setCache] = useState({
+            username: localStorage.getItem("username"),
+            apiKey: localStorage.getItem("apiKey"),
+        });
         const navigate = useNavigate();
+
+        useEffect(() => {
+            if (!initialized) {
+                initialized = true;
+                setInitializedState(true);
+                if (cache.username !== null && cache.apiKey !== null) {
+                    console.log("making auto buildup request here");
+                    console.log("🚀 Starting buildup request with:", { username, apiKey });
+                    buildupHandler({ username: cache.username, apiKey: cache.apiKey }, setSubscribeVar);
+                }
+            }
+        }, [initializedState, cache]);
 
         useEffect(() => {
             if (subscribeVar > 0) {
                 let data = getBuildupData();
                 console.log("📦 Retrieved buildupData:", data);
 
-                if (data && data.message === "Success!") {
+                if (data && data.status === HTTPStatusCodes.OK) {
                     setAuth(true);
                     console.log("✅ Authentication successful for:", data.username);
                     navigate("/dashboard");

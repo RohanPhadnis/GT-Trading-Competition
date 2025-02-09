@@ -8,15 +8,35 @@ import ImageDisplayWidget from "../widgets/ImageDisplayWidget.js";
 import ChartWidget from "../widgets/ChartWidget.js";
 import AuctionWidget from "../widgets/AuctionWidget.js";
 import EquitiesDashboard from "../widgets/EquityDashboard.js"
-import { getTickers } from "../HelperClasses/api.js";
+import {getBuildupData, getTickers, HTTPStatusCodes} from "../HelperClasses/api.js"; // Import getTickers()
 import MessageViewer from "../widgets/MessageViewer"
 import PnLWidget from "../widgets/PnLWidget.js";
 import RealizedPnLWidget from "../widgets/realisedPnLWidget.js";
+import {useNavigate} from "react-router-dom";
+
+let initialized = false;
 
 const NewDashboard = () => {
     const [selectedStock, setSelectedStock] = useState(getTickers()[0]);
 
     const [orders, setOrders] = useState([]);
+
+    const [initializedState, setInitializedState] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        console.log('hello');
+        if (!initialized) {
+            console.log('pedro');
+            initialized = true;
+            setInitializedState(() => true);
+            const data = getBuildupData();
+            if (data === null || data.status !== HTTPStatusCodes.OK) {
+                console.log('guillermo');
+                navigate("/");
+            }
+        }
+    }, [initializedState]);
 
     useEffect(() => {
         const filteredOrders = samplePnlData.filter(
