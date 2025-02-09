@@ -19,6 +19,49 @@
   width: 100%;
 }
 
+.OrderType {
+    display: flex;
+    flex-direction: column;  /* Ensure stacking vertically */
+    align-items: center;  /* Center elements horizontally */
+    gap: 5px; 
+}
+
+.choose-title {
+    font-size: 16px; /* Optional: Adjust font size */
+    text-align: center;
+}
+
+.market-button, .limit-button {
+    margin: 2px; 
+    width: 50%;
+    background-color: transparent;
+    color: white;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: none;
+    border: none;
+}
+
+.market-button:hover, .limit-button:hover {
+    background-color: white; /* Light grey background on hover */
+    border: 2px solid white; /* White border on hover */
+    color: black; /* Text remains black */
+    box-shadow: none; /* No shadow for flatness */
+}
+
+.market-button:focus, .limit-button:focus, 
+.market-button:active, .limit-button:active {
+    background-color: transparent; /* White background when active or focused */
+    color: white; /* Black text */
+    border-bottom: 2px solid white; /* White border when active/focused */
+    box-shadow: none; /* Remove any shadow */
+}
+
+.selectedStockWidget {
+  padding: 2px;
+}
 /* Input Fields & Buttons - Same Width & Height */
 
 .buy-button,

@@ -26,20 +26,20 @@
 }
 
 html, body {
-  height: 100%;
+  height: 100vh;
+  width: 100vw;
   margin: 0;
-  overflow-y: hidden;
+  padding: 0;
   background-color: black;
-  font: white;
 }
 
 .dashboard {
   display: flex;
-  gap: 10px;
-  width: 100%;
-  padding: 10px;
+  gap: 5px;
+  padding: 5px;
   box-sizing: border-box;
   height: calc(100vh - 10px);
+  width: calc(100% - 15px);
 }
 
 .column-1 {
@@ -47,6 +47,17 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  flex-shrink: 0; /* Prevents shrinking and forces exact width */
+  box-sizing: border-box;
+}
+
+.column-3 {
+  flex: 0 0 25%;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0; /* Prevents it from resizing */
+  overflow: hidden; /* Ensures no extra content overflows */
+  box-sizing: border-box;
 }
 
 .column-2 {
@@ -54,13 +65,7 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 5px;
-
-}
-
-.column-3 {
-  flex: 0 0 25%;
-  display: flex;
-  flex-direction: column;
+  flex-shrink: 0;
 }
 
 .widget {
@@ -102,12 +107,32 @@ height: 20%;
 /**
 Column 2
 **/
+
+.position-info .widget-container {
+  display: flex;
+  width: 100%;
+}
+
+.position-info .widget-item {
+  padding: 10px;
+}
+
+.selected-stock, .order-type {
+  width: 20%; /* 20% width for the first two widgets */
+}
+
+.place-orders {
+  width: 60%; /* 60% width for the third widget */
+}
+
+
 .chart {
   height: 50%;
 }
 
 .position-info {
   height: 15%;
+
 }
 
 .trade-table {

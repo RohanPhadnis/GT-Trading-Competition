@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from "react";
 import "./Dashboard.css";
-import PlaceOrdersWidget from "../widgets/PlaceOrders.js";
-import NewTradeTable from "../widgets/NewTradeTable.js";
+import { LimitOrdersWidget, OrderType, SelectedStockWidget } from "../widgets/PlaceOrders.js";
+import MarketOrdersWidget from "../widgets/MarketOrderWidget.js";
+import TradeTable from "../widgets/NewTradeTable.js";
 import samplePnlData from "../SampleData/samplePnlData.json";
 import OrderBookWidget from "../widgets/OrderBookWidgetss.js";
-import ImageDisplayWidget from "../widgets/ImageDisplayWidget.js";
 import ChartWidget from "../widgets/ChartWidget.js";
 import AuctionWidget from "../widgets/AuctionWidget.js";
-import EquitiesDashboard from "../widgets/EquityDashboard.js"
+import EquitiesDashboard from "../widgets/EquityDashboard.js";
 import { getTickers } from "../HelperClasses/api.js";
-import MessageViewer from "../widgets/MessageViewer"
 import PnLWidget from "../widgets/PnLWidget.js";
 import RealizedPnLWidget from "../widgets/realisedPnLWidget.js";
 
 const NewDashboard = () => {
     const [selectedStock, setSelectedStock] = useState(getTickers()[0]);
-
     const [orders, setOrders] = useState([]);
+    const [orderType, setOrderType] = useState("market"); // State to track selected order type
 
     useEffect(() => {
         const filteredOrders = samplePnlData.filter(
@@ -26,59 +25,66 @@ const NewDashboard = () => {
     }, [selectedStock]);
 
     return (
-        <div className = "dashboard"> 
-
-            { /* COLUMN 1 */ }
-
-            <div className = "column-1"> 
-
-                { /** PNL WIDGET */}
-                <div className = "widget pnl-Widget">
-                    <PnLWidget/>
+        <div className="dashboard">
+            {/* COLUMN 1 */}
+            <div className="column-1">
+                {/* PNL WIDGET */}
+                <div className="widget pnl-Widget">
+                    <PnLWidget />
                 </div>
 
-                { /* LIST OF EQUITIES */ }
-                <div className = "widget equities" > 
-                    <EquitiesDashboard selectedStock = { selectedStock }setSelectedStock = { setSelectedStock }/>
+                {/* LIST OF EQUITIES */}
+                <div className="widget equities">
+                    <EquitiesDashboard selectedStock={selectedStock} setSelectedStock={setSelectedStock} />
                 </div>
 
-                { /* AUCTION WIDGET */ }
-                <div className = "widget auctionWidget">
-                    <AuctionWidget/>
+                {/* AUCTION WIDGET */}
+                <div className="widget auctionWidget">
+                    <AuctionWidget />
                 </div>
 
-                { /** REALISED PNL WIDGET */}
-                <div className = "widget pnl-Widget">
-                    <RealizedPnLWidget/>
+                {/* REALIZED PNL WIDGET */}
+                <div className="widget pnl-Widget">
+                    <RealizedPnLWidget />
                 </div>
-
             </div>
 
-            { /* COLUMN 2 */ }
-
-            <div className = "column-2"> 
-
-                { /* CURRENT POSITION WIDGET */ } 
-                <div className = "widget position-info"> 
-                <PlaceOrdersWidget selectedStock = { selectedStock }/> 
+            {/* COLUMN 2 */}
+            <div className="column-2">
+                {/* CURRENT POSITION WIDGET */}
+                <div className="widget position-info">
+                    <div className="widget-container">
+                        <div className="widget-item selected-stock">
+                            <SelectedStockWidget selectedStock={selectedStock} />
+                        </div>
+                        <div className="widget-item order-type">
+                            <OrderType orderType={orderType} setOrderType={setOrderType} />
+                        </div>
+                        <div className="widget-item place-orders">
+                            {orderType === "limit" ? (
+                                <LimitOrdersWidget selectedStock={selectedStock} />
+                            ) : (
+                                <MarketOrdersWidget selectedStock={selectedStock} />
+                            )}
+                        </div>
+                    </div>
                 </div>
 
-                {/** Chart Widget */}
-                <div className = "widget chart">
-                    <ChartWidget/>
+                {/* Chart Widget */}
+                <div className="widget chart">
+                    <ChartWidget />
                 </div>
 
-                { /* TRADE TABLE */ }
-                <div className = "widget trade-table" >
-                    <NewTradeTable/>
+                {/* TRADE TABLE */}
+                <div className="widget trade-table">
+                    <TradeTable />
                 </div>
-
             </div>
 
-            {/* COLUMN 3*/}
-            <div className = "column-3">
+            {/* COLUMN 3 */}
+            <div className="column-3">
                 <div className="widget order-book">
-                <OrderBookWidget selectedStock={selectedStock}/>
+                    <OrderBookWidget selectedStock={selectedStock} />
                 </div>
             </div>
         </div>

@@ -3,7 +3,7 @@ import "./TradeTable.css";
 import userPortfolio from "../HelperClasses/UserPortfolio";
 import { removeHandler } from "../HelperClasses/api.js";
 
-const NewTradeTable = () => {
+const TradeTable = () => {
     const [balance, setBalance] = useState(0);
     const [positions, setPositions] = useState({});
     const [openOrders, setOpenOrders] = useState([]);
@@ -118,5 +118,5 @@ const NewTradeTable = () => {
     );
 };
 
-export default NewTradeTable;
+export default TradeTable;
 
