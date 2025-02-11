@@ -53,36 +53,51 @@ export const LimitOrdersWidget = ({ selectedStock }) => {
 
     return (
         <div className="widget-container">
-            <div className="buy-sell-row">
+            <div className="buy-sell-flex">
 
-                <div className="input-group">
-                    <label htmlFor="volume"> Volume: </label>
-                    <input
-                        id="volume"
-                        type="number"
-                        className={`quantity-input ${amount === 0 || amount === "" ? "placeholder-visible" : ""}`}
-                        value={amount === "" ? "" : amount}
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            setAmount(value === "" ? "" : Number(value));
-                        }}
-                        placeholder="Enter Quantity"
-                    />
+                <div className = "buy-sell-column-1">
+
+                    <button className="buy-button" onClick={handleBuy}> Buy </button>
+                    <button className="sell-button" onClick={handleSell}> Sell </button>
+
                 </div>
 
-                <button className="buy-button" onClick={handleBuy}> Buy </button>
-                <button className="sell-button" onClick={handleSell}> Sell </button>
+                <div className="buy-sell-column-2">
 
-                <div className="input-group">
+                    <label htmlFor="volume"> Volume: </label>
                     <label htmlFor="price"> Price: </label>
-                    <input
-                        id="price"
-                        type="number"
-                        className={`price-input ${!price && price !== 0 ? "placeholder-visible" : ""}`}
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value === "" ? "" : Number(e.target.value))}
-                        placeholder="For Limit Orders Only"
-                    />
+                    
+                </div>
+
+                <div className = "buy-sell-column-3">
+
+                    <div className="input-group">
+                        <input
+                            id="volume"
+                            type="number"
+                            className={`quantity-input ${amount === 0 || amount === "" ? "placeholder-visible" : ""}`}
+                            value={amount === "" ? "" : amount}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                setAmount(value === "" ? "" : Number(value));
+                            }}
+                            placeholder="Enter Quantity"
+                        />
+                    </div>
+
+                    <div className="input-group">
+                        
+                        <input
+                            id="price"
+                            type="number"
+                            className={`price-input ${!price && price !== 0 ? "placeholder-visible" : ""}`}
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value === "" ? "" : Number(e.target.value))}
+                            placeholder="For Limit Orders Only"
+                        />
+
+                    </div>
+
                 </div>
             </div>
         </div>

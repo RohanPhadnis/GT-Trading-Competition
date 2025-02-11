@@ -11,12 +11,16 @@
 }
 
 /* Buy & Sell Row - Fully Centered */
-.buy-sell-row {
+.buy-sell-flex {
   display: flex;
   align-items: center; /* Align items vertically */
   justify-content: center; /* Space evenly */
-  gap: 10px; /* Consistent spacing */
+  gap: 15px; /* Consistent spacing */
   width: 100%;
+  flex-direction: row;
+  background-color: #1a1a1a;
+  padding : 20px;
+  border-radius: 5px;
 }
 
 .OrderType {
@@ -24,6 +28,27 @@
     flex-direction: column;  /* Ensure stacking vertically */
     align-items: center;  /* Center elements horizontally */
     gap: 5px; 
+}
+
+.buy-sell-column-1 {
+    display: flex;
+    flex-direction: column;
+    gap : 10px;
+    width : 33%
+}
+
+.buy-sell-column-2 {
+    display: flex;
+    flex-direction: column;
+    gap : 10px;
+    width : 33%
+}
+
+.buy-sell-column-3 {
+    display: flex;
+    flex-direction: column;
+    gap : 10px;
+    width : 33%;
 }
 
 .choose-title {
@@ -44,19 +69,13 @@
     border: none;
 }
 
-.market-button:hover, .limit-button:hover {
+.market-button:hover, .limit-button:hover,
+.market-button:focus, .limit-button:focus, 
+.market-button:active, .limit-button:active {
     background-color: white; /* Light grey background on hover */
     border: 2px solid white; /* White border on hover */
     color: black; /* Text remains black */
     box-shadow: none; /* No shadow for flatness */
-}
-
-.market-button:focus, .limit-button:focus, 
-.market-button:active, .limit-button:active {
-    background-color: transparent; /* White background when active or focused */
-    color: white; /* Black text */
-    border-bottom: 2px solid white; /* White border when active/focused */
-    box-shadow: none; /* Remove any shadow */
 }
 
 .selectedStockWidget {
@@ -79,12 +98,10 @@
 }
 
 .quantity-input {
-    margin-top: 4px;
-    width: 160px !important; /* Same width for all elements */ 
-    height: 25px !important; /* Same height for all elements */
+    margin-top: 4px; 
+    height: 20px !important; /* Same height for all elements */
     text-align: center;
     font-size: 16px; /* Consistent font size */
-    font-weight: bold;
     border-radius: 8px; /* Rounded corners */
     display: flex;
     align-items: center;
@@ -92,11 +109,9 @@
     font-family: 'Roboto', sans-serif !important;
 }
 .price-input {
-    width: 140x; /* Same width for all elements */
-    height: 30px; /* Same height for all elements */
+    height: 20px; /* Same height for all elements */
     text-align: center;
     font-size: 16px; /* Consistent font size */
-    font-weight: bold;
     border-radius: 8px; /* Rounded corners */
     display: flex;
     align-items: center;
@@ -107,10 +122,10 @@
 /* Input Fields */
 .quantity-input,
 .price-input {
+    width: 80%;
     border: 1px solid #ccc;
     background-color: white;
     color: black;
-    padding: 5px;
 }
 
 /* Ensuring Inputs Align Properly */

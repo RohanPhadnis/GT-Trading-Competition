@@ -118,13 +118,12 @@ Column 2
 }
 
 .selected-stock, .order-type {
-  width: 20%; /* 20% width for the first two widgets */
+  width: 20%; 
 }
 
 .place-orders {
   width: 60%; /* 60% width for the third widget */
 }
-
 
 .chart {
   height: 50%;
