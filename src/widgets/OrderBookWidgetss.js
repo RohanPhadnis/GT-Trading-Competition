@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import PriceLevelWidget from "./PriceLevelWidgets";
 import "./OrderBookWidgets.css";
 import orderBookInstance from "../HelperClasses/OrderBook"; // Import the OrderBook singleton
@@ -84,6 +84,22 @@ const OrderBookWidget = ({ selectedStock }) => {
         .map(([price, quantity]) => ({ P: parseFloat(price), Q: quantity }))
         .sort((a, b) => b.P - a.P); // Sorted from highest to lowest
 
+    const asksScroll = useRef(null);
+
+    useEffect(() => {
+        if (asksScroll.current) {
+            asksScroll.current.scrollTop = asksScroll.current.scrollHeight;
+        }
+    }, [sortedAsks]);
+
+    const bidsScroll = useRef(null);
+
+    useEffect(() => {
+        if (bidsScroll.current) {
+            bidsScroll.current.scrollTop = 0;
+        }
+    }, [sortedBids]);
+
     return (
         <div className="order-book-widget">
             <h4>Order Book for {selectedStock}</h4>
@@ -96,7 +112,7 @@ const OrderBookWidget = ({ selectedStock }) => {
                         <span className="header quantity-header"> Quantity </span>
                         <span className="header orders-header"> Amount </span>
                     </div>
-                    <div className="order-book-scrollable">
+                    <div ref={asksScroll} className="order-book-scrollable">
                         {/* Asks */}
                         {sortedAsks.length > 0 ? (
                             sortedAsks.map((ask, index) => (
@@ -111,7 +127,9 @@ const OrderBookWidget = ({ selectedStock }) => {
                         ) : (
                             <p className="empty-section">No asks available</p>
                         )}
+                    </div>
 
+                    <div ref={bidsScroll} className="order-book-scrollable">
                         {/* Bids */}
                         {sortedBids.length > 0 ? (
                             sortedBids.map((bid, index) => (
