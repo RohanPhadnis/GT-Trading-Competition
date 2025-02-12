@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../Dashboard/Dashboard.css";
+import "./EquityDashboard.css";
 import { getTickers } from "../HelperClasses/api.js";
 import StockWidget from "./StockWidget.js"; // Ensure StockWidget is imported
 
@@ -21,29 +21,26 @@ const EquitiesDashboard = ({ selectedStock, setSelectedStock }) => {
         setSelectedStock(ticker);
     };
 
-    return ( <
-        div className = "equities-dashboard" >
-        <
-        h2 > Tickers Trading < /h2> <
-        div className = "tickers-container" > {
-            tickers.length > 0 ? (
-                tickers.map((ticker) => ( <
-                    div key = { ticker }
-                    className = { `stock-item ${selectedStock === ticker ? "selected" : ""}` }
-                    onClick = {
-                        () => handleStockClick(ticker)
-                    } >
-                    <
-                    StockWidget ticker = { ticker }
-                    /> < /
-                    div >
-                ))
-            ) : ( <
-                p > No tickers available < /p>
-            )
-        } <
-        /div> < /
-        div >
+    return ( 
+        <div className="equities-dashboard">
+            <div className="tickers-container"> 
+                {
+                    tickers.length > 0 ? (
+                        tickers.map((ticker) => (
+                            <div
+                                key={ticker}
+                                className={`stock-item ${selectedStock === ticker ? "selected" : ""}`}
+                                onClick={() => handleStockClick(ticker)}
+                            >
+                                <StockWidget ticker={ticker}/> 
+                            </div>
+                        ))
+                    ) : (
+                        <p> No tickers available </p>
+                    )
+                }
+            </div>
+        </div>
     );
 };
 

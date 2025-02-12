@@ -7,17 +7,15 @@ const StockWidget = ({ ticker }) => {
     // Ensure ticker is always a valid string
     if (!ticker || typeof ticker !== "string") {
         console.error("❌ Invalid ticker received:", ticker);
-        return <div className = "stock-widget" > Build Up First! < /div>;
+        return <div className = "stock-widget" > Build Up First! </div>;
     }
 
-    return ( <
-        div className = "stock-widget" >
-        <
-        div className = "stock-header" >
-        <
-        span className = "ticker" > { ticker } < /span> < /
-        div > <
-        /div>
+    return ( 
+        <div className = "stock-widget" >
+            <div className = "stock-header" >
+                <span className = "ticker" > { ticker } </span> 
+            </div>
+        </div>
     );
 };
 

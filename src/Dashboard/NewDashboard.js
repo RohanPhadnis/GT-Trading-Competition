@@ -1,18 +1,42 @@
 import React, { useState, useEffect } from "react";
 import "./Dashboard.css";
-import PlaceOrdersWidget from "../widgets/PlaceOrders.js";
-import NewTradeTable from "../widgets/NewTradeTable.js";
+import { LimitOrdersWidget, OrderType, SelectedStockWidget } from "../widgets/PlaceOrders.js";
+import MarketOrdersWidget from "../widgets/MarketOrderWidget.js";
+import TradeTable from "../widgets/NewTradeTable.js";
 import samplePnlData from "../SampleData/samplePnlData.json";
 import OrderBookWidget from "../widgets/OrderBookWidgetss.js";
-import ImageDisplayWidget from "../widgets/ImageDisplayWidget.js";
+import ChartWidget from "../widgets/ChartWidget.js";
 import AuctionWidget from "../widgets/AuctionWidget.js";
 import EquitiesDashboard from "../widgets/EquityDashboard.js"
-import { getTickers } from "../HelperClasses/api.js";
+import {getBuildupData, getTickers, HTTPStatusCodes} from "../HelperClasses/api.js"; // Import getTickers()
 import MessageViewer from "../widgets/MessageViewer"
+import PnLWidget from "../widgets/PnLWidget.js";
+import RealizedPnLWidget from "../widgets/realisedPnLWidget.js";
+import {useNavigate} from "react-router-dom";
+
+let initialized = false;
+
 const NewDashboard = () => {
     const [selectedStock, setSelectedStock] = useState(getTickers()[0]);
-
     const [orders, setOrders] = useState([]);
+    const [orderType, setOrderType] = useState("market"); // State to track selected order type
+
+    const [initializedState, setInitializedState] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        console.log('hello');
+        if (!initialized) {
+            console.log('pedro');
+            initialized = true;
+            setInitializedState(() => true);
+            const data = getBuildupData();
+            if (data === null || data.status !== HTTPStatusCodes.OK) {
+                console.log('guillermo');
+                navigate("/");
+            }
+        }
+    }, [initializedState]);
 
     useEffect(() => {
         const filteredOrders = samplePnlData.filter(
@@ -21,75 +45,70 @@ const NewDashboard = () => {
         setOrders(filteredOrders);
     }, [selectedStock]);
 
-    return ( <
-        div className = "dashboard" > { /* COLUMN 1 */ } <
-        div className = "column-1" > { /* AUCTION WIDGET */ } <
-        div className = "Equities Dashboard" > < EquitiesDashboard selectedStock = { selectedStock }
-        setSelectedStock = { setSelectedStock }
-        />< /div >
+    return (
+        <div className="dashboard">
+            {/* COLUMN 1 */}
+            <div className="column-1">
+                {/* PNL WIDGET */}
+                <div className="widget pnl-Widget">
+                    <PnLWidget />
+                </div>
 
-        <
-        div className = "widget auctionWidget" >
-        <
-        AuctionWidget / >
-        <
-        /div>
+                {/* LIST OF EQUITIES */}
+                <div className="widget equities">
+                    <EquitiesDashboard selectedStock={selectedStock} setSelectedStock={setSelectedStock} />
+                </div>
 
-        { /* LOGO WIDGET */ } <
-        div className = "widget team-logo" >
-        <
-        ImageDisplayWidget / >
-        <
-        /div> < /
-        div >
+                {/* AUCTION WIDGET */}
+                <div className="widget auctionWidget">
+                    <AuctionWidget />
+                </div>
 
-        { /* COLUMN 2 */ } <
-        div className = "column-2" > { /* CURRENT POSITION WIDGET */ } <
-        div className = "widget position-info" >
-        <
-        PlaceOrdersWidget selectedStock = { selectedStock }
-        /> < /
-        div >
+                {/* REALIZED PNL WIDGET */}
+                <div className="widget pnl-Widget">
+                    <RealizedPnLWidget />
+                </div>
+            </div>
 
+            {/* COLUMN 2 */}
+            <div className="column-2">
+                {/* CURRENT POSITION WIDGET */}
+                <div className="widget position-info">
+                    <div className="widget-container">
+                        <div className="widget-item selected-stock">
+                            <SelectedStockWidget selectedStock={selectedStock} />
+                        </div>
+                        <div className="widget-item order-type">
+                            <OrderType orderType={orderType} setOrderType={setOrderType} />
+                        </div>
+                        <div className="widget-item place-orders">
+                            {orderType === "limit" ? (
+                                <LimitOrdersWidget selectedStock={selectedStock} />
+                            ) : (
+                                <MarketOrdersWidget selectedStock={selectedStock} />
+                            )}
+                        </div>
+                    </div>
+                </div>
 
-        { /* TRADE TABLE */ } <
-        div className = "New Trade Table" >
-        <
-        NewTradeTable / >
-            <MessageViewer />
-        <
-        /div> < /
-        div >
+                {/* Chart Widget */}
+                <div className="widget chart">
+                    <ChartWidget />
+                </div>
 
-        { /* COLUMN 3 */ } <
-        div className = "column-3" > { /* ORDER BOOK WIDGET */ } <
-        div className = "widget order-book" >
-        <
-        OrderBookWidget selectedStock = { selectedStock }
-        orders = { orders }
-        /> < /
-        div > <
-        /div>
+                {/* TRADE TABLE */}
+                <div className="widget trade-table">
+                    <TradeTable />
+                </div>
+            </div>
 
-        { /* RECENT ORDERS WIDGET (COMMENTED OUT, UNCOMMENT IF NEEDED) */ } {
-            /* 
-                            <div className="widget recent-orders">
-                                Open Orders
-                                <RecentOrdersWidget orders={orders} />
-                            </div>
-                        */
-        }
-
-        { /* CONTEST DASHBOARD (COMMENTED OUT, UNCOMMENT IF NEEDED) */ } {
-            /* 
-                            <div className="widget contest-info">
-                                Contest Information
-                                <Contestdash />
-                            </div>
-                        */
-        }
-        <
-        /div>
+            {/* COLUMN 3 */}
+            <div className="column-3">
+                <div className="widget order-book">
+                    <OrderBookWidget selectedStock={selectedStock} />
+                </div>
+            </div>
+        </div>
     );
 };
 

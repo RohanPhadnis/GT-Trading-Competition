@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import StockWidget from "../widgets/StockWidget.js";
 import AuthenticationInput from "../widgets/AuthenticationInput.js";
@@ -14,7 +15,6 @@ import OrderBookWidget from "../widgets/OrderBookWidgetss.js";
 import ImageDisplayWidget from "../widgets/ImageDisplayWidget.js";
 import PnLDashBoard from "../widgets/PnLWidget.js";
 import AuctionWidget from "../widgets/AuctionWidget.js";
-import { getTickers } from "../HelperClasses/api.js"; // Import getTickers()
 import ErrorBoundary from "./ErrorBoundary"
 
 const Dashboard = () => {
@@ -77,55 +77,14 @@ const Dashboard = () => {
         setIsSubmitted(true);
     };
 
-    return ( <
-        div className = "dashboard" >
-        <
-        div className = "column-1" > { /* USER AUTHENTICATION AND USER INFO */ } <
-        div className = "widget user-info" >
-        User Authentication {!isSubmitted && < AuthenticationInput / > } <
-        p > { message } < /p> < /
-        div >
-
-
-        { /* AUCTION WIDGET */ } <
-        div className = "widget auctionWidget" >
-        <
-        AuctionWidget / >
-        <
-        /div>  { / * LOGO WIDGET * / } <
-        div className = "widget team-logo" >
-        <
-        ImageDisplayWidget / >
-        <
-        /div> </div >
-
-        <
-        div className = "column-2" > { /* CURRENT POSITION WIDGET */ } <
-        div className = "widget position-info" >
-        <
-        PlaceOrdersWidget selectedStock = { selectedStock }
-        /> < /
-        div >
-
-        <
-        /
-        div > { /* TRADE TABLE */ } <
-        div className = "widget trade-table" >
-        <
-        TradeTable / >
-        <
-        /div> < /
-        div >
-
-        <
-        div className = "column-3" > { /* ORDER BOOK WIDGET */ } <
-        div className = "widget order-book" >
-        <
-        OrderBookWidget selectedStock = { selectedStock }
-        orders = { orders }
-        /> < /
-        div > <
-        /div>
+    return ( <div className = "dashboard">
+        <div className = "column-1" > { /* USER AUTHENTICATION AND USER INFO */ } 
+        <div className = "widget user-info">
+        User Authentication {!isSubmitted && <AuthenticationInput/> } 
+            <p>    
+                { message } 
+            </p> 
+        </div>
 
         { /* RECENT ORDERS WIDGET (COMMENTED OUT, UNCOMMENT IF NEEDED) */ } {
             /* 
@@ -143,8 +102,9 @@ const Dashboard = () => {
                             <Contestdash />
                         </div>
                         */
-        } <
-        /div>
+        }
+        </div>
+        </div>
     );
 };
 

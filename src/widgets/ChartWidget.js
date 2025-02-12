@@ -324,10 +324,16 @@ const ChartWidget = ({selectedStock}) => {
     }
     */
     return (
-        <div>
-           <ReactApexChart options={options} series={DataHelper.getCandleStickInfo(selectedStock, 5)} type="candlestick" height={350} />
+        <div className="chart-widget-container">
+          <ReactApexChart
+            options={options}
+            series={DataHelper.getCandleStickInfo(selectedStock, 5)}
+            type="candlestick"
+            width="100%"
+            height="100%"
+          />
         </div>
-    );
+      );
 }
 
 export default ChartWidget;

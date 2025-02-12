@@ -1,38 +1,33 @@
-/* PnL Dashboard Styles */
-
 .pnl-widget {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  background-color: #000000;
-  color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  max-width: 100%; 
-  height: 100%;
-  margin: 0 auto;
-  overflow: hidden; 
-}
-
-
-/* Table Container */
-.pnl-widget-table-container {
-  overflow-x: auto; /* Allow horizontal scrolling if needed */
-  overflow-y: auto; /* Allow vertical scrolling if needed */
-  max-height: 500px; /* Restrict table height */
-  padding: 15px;
-  background-color: #0c0c0c; /* Slightly lighter background for contrast */
-  height: 100%; /* Make table container fill available height */
-}
-
-/* Table Styles */
-.pnl-widget-table {
-  height: 100%;
-  width: 100%;
-  border-collapse: collapse;
+  padding: 10px 20px;
+  border-radius: 5px;
   text-align: center;
+  width: 100%;
+  transition: background 0.3s ease-in-out;
 }
 
+.pnl-positive {
+  background: rgba(0, 255, 0, 0.2); /* Light green for positive PnL */
+}
 
+.pnl-negative {
+  background: rgba(255, 0, 0, 0.2); /* Light red for negative PnL */
+}
 
+.pnl-heading {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6); /* White and translucent */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.pnl-value {
+  font-size: 36px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.8); /* White and translucent */
+  font-family: "Oswald", sans-serif; /* Tall and narrow font */
+  margin: 0;
+}
 
 

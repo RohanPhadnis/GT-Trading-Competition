@@ -1,14 +1,15 @@
 import React from "react";
 import "./PriceLevelWidgets.css";
 
-const PriceLevelWidget = ({ price, quantity, orders }) => {
+const PriceLevelWidget = ({ price, quantity, amount, className }) => {
   return (
-    <div className="price-level-widget">
+    <div className={`price-level-widget ${className}`}>
       <span className="price">{price}</span>
       <span className="quantity">{quantity}</span>
-      <span className="orders">{orders}</span>
+      <span className="amount">{amount}</span>
     </div>
   );
 };
 
 export default PriceLevelWidget;
+

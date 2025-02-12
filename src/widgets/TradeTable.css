@@ -1,67 +1,90 @@
 /* TradeTable.css */
 .pnl-dashboard {
-    background-color: #121212; /* Sleek black background */
-    color: #e0e0e0; /* Light grey text for readability */
-    font-family: "Arial", sans-serif;
-    font-size: 12px; /* Small text size */
-    height: 80%;
-    border-radius: 8px;
-    padding: 10px;
-  }
-  
-  .pnl-table-container {
-    overflow-x: auto;
-    border-radius: 8px;
-  }
-  
-  .pnl-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .pnl-table thead {
-    background-color: #1e1e1e; /* Dark grey background for headers */
-  }
-  
-  .pnl-table th,
-  .pnl-table td {
-    text-align: center;
-    padding: 8px 12px;
-  }
-  
-  .pnl-table th {
-    color: #ffffff; /* White text for headers */
-    font-weight: normal; /* Subtle header styling */
-    border-bottom: 2px solid #444; /* Header border for separation */
-  }
-  
-  .pnl-table td {
-    border-bottom: 1px solid #333; /* Grey line for row separation */
-  }
-  
-  .pnl-table .header {
-    background-color: #292929; /* Slightly lighter grey for main header */
-  }
-  
-  .header-section {
-    border-right: 1px solid #444; /* Divider between header sections */
-  }
-  
-  .divider {
-    background-color: black; /* White line dividing sections */
-    width: 2px;
-    padding: 0;
-  }
-  
-  .pnl-table tbody tr:hover {
-    background-color: #1c1c1c; /* Slightly lighter grey for hover effect */
-  }
-  
-  .pnl-table tbody tr:nth-child(even) {
-    background-color: #181818; /* Alternating row background */
-  }
-  
-  .pnl-table tbody tr:nth-child(odd) {
-    background-color: #121212; /* Alternating row background */
-  }
-  
+  display: flex;
+  flex-direction: column;
+  /* Fill the parent’s height (assuming the parent is also sized!) */
+  height: 100%;
+  background-color: #121212;
+  color: #e0e0e0;
+  width: 100%;
+  /* Switch to Roboto and bump the size up slightly */
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  border-radius: 14px;
+}
+
+.tables-container {
+  display: flex;
+  gap: 20px; /* Space between tables */
+  justify-content: space-between; /* Ensures tables are spread out evenly */
+  flex-wrap: wrap; /* Ensures responsiveness on smaller screens */
+  padding: 10px;
+}
+
+.table-wrapper {
+  flex: 1;
+  min-width: 45%; /* Ensures each table takes at least 45% of the width */
+}
+
+
+.pnl-table-container {
+  /* Let this container expand to use leftover space */
+  flex: 1;
+  /* Required in many browsers to allow scroll in a flex child */
+  min-height: 0; 
+  border-radius: 8px;
+  width: 100%;
+}
+
+.pnl-table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.pnl-table thead {
+  background-color: #1e1e1e; /* Dark grey background for headers */
+}
+
+.pnl-table th,
+.pnl-table td {
+  text-align: center;
+  padding: 8px 12px;
+}
+
+.pnl-table th {
+  color: #ffffff; /* White text for headers */
+  font-weight: normal; /* Subtle header styling */
+  border-bottom: 2px solid #444; /* Header border for separation */
+}
+
+.pnl-table td {
+  border-bottom: 1px solid #333; /* Grey line for row separation */
+}
+
+.pnl-table .header {
+  background-color: #292929; /* Slightly lighter grey for main header */
+}
+
+.header-section {
+  border-right: 1px solid #444; /* Divider between header sections */
+}
+
+.divider {
+  background-color: black; /* Divider line */
+  width: 2px;
+  padding: 0;
+}
+
+.pnl-table tbody tr:hover {
+  background-color: #1c1c1c; /* Slightly lighter grey for hover effect */
+}
+
+.pnl-table tbody tr:nth-child(even) {
+  background-color: #181818; /* Alternating row background */
+}
+
+.pnl-table tbody tr:nth-child(odd) {
+  background-color: #121212; /* Alternating row background */
+}
