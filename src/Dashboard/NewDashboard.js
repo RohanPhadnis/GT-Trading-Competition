@@ -12,6 +12,7 @@ import {getBuildupData, getTickers, HTTPStatusCodes} from "../HelperClasses/api.
 import MessageViewer from "../widgets/MessageViewer"
 import PnLWidget from "../widgets/PnLWidget.js";
 import RealizedPnLWidget from "../widgets/realisedPnLWidget.js";
+import Profile from "../widgets/Profile";
 import {useNavigate} from "react-router-dom";
 
 let initialized = false;
@@ -67,6 +68,10 @@ const NewDashboard = () => {
                 {/* REALIZED PNL WIDGET */}
                 <div className="widget pnl-Widget">
                     <RealizedPnLWidget />
+                </div>
+
+                <div className="widget profileWidget">
+                    <Profile />
                 </div>
             </div>
 
