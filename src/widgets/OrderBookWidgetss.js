@@ -84,21 +84,62 @@ const OrderBookWidget = ({ selectedStock }) => {
         .map(([price, quantity]) => ({ P: parseFloat(price), Q: quantity }))
         .sort((a, b) => b.P - a.P); // Sorted from highest to lowest
 
-    const asksScroll = useRef(null);
+    const [autoCenter, setAutoCenter] = useState(true);
+
+    const asksRef = useRef(null);
 
     useEffect(() => {
-        if (asksScroll.current) {
-            asksScroll.current.scrollTop = asksScroll.current.scrollHeight;
+        if (asksRef.current && autoCenter) {
+            asksRef.current.scrollTop = asksRef.current.scrollHeight - asksRef.current.clientHeight;
         }
-    }, [sortedAsks]);
+    }, [sortedAsks, autoCenter]);
 
-    const bidsScroll = useRef(null);
+    const bidsRef = useRef(null);
 
     useEffect(() => {
-        if (bidsScroll.current) {
-            bidsScroll.current.scrollTop = 0;
+        if (bidsRef.current && autoCenter) {
+            bidsRef.current.scrollTop = 0;
         }
-    }, [sortedBids]);
+    }, [sortedBids, autoCenter]);
+
+    useEffect(() => {
+        const handleBidsScroll = () => {
+            if (bidsRef.current && bidsRef.current.scrollTop != 0) {
+                setAutoCenter(prev => prev ? !prev : prev);
+            }
+        };
+
+        const handleAsksScroll = () => {
+            if (asksRef.current && asksRef.current.scrollTop != asksRef.current.scrollHeight - asksRef.current.clientHeight) {
+                setAutoCenter(prev => prev ? !prev : prev);
+            }
+        };
+    
+        const bidsDivElement = bidsRef.current;
+        if (bidsDivElement) {
+            bidsDivElement.addEventListener("scroll", handleBidsScroll);
+        }
+
+        const asksDivElement = asksRef.current;
+        if (asksDivElement) {
+            asksDivElement.addEventListener("scroll", handleAsksScroll);
+        }
+    
+        return () => {
+            if (bidsDivElement) {
+                bidsDivElement.removeEventListener("scroll", handleBidsScroll);
+            }
+
+            if (asksDivElement) {
+                asksDivElement.removeEventListener("scroll", handleAsksScroll);
+            }
+        };
+    }, [asksRef.current, bidsRef.current, autoCenter]);
+
+    const handleReCenter = () => {
+        setAutoCenter(prev => prev ? prev : !prev);
+    };
+    
 
     return (
         <div className="order-book-widget">
@@ -112,7 +153,7 @@ const OrderBookWidget = ({ selectedStock }) => {
                         <span className="header quantity-header"> Quantity </span>
                         <span className="header orders-header"> Amount </span>
                     </div>
-                    <div ref={asksScroll} className="order-book-scrollable">
+                    <div ref={asksRef} className="order-book-scrollable">
                         {/* Asks */}
                         {sortedAsks.length > 0 ? (
                             sortedAsks.map((ask, index) => (
@@ -129,7 +170,25 @@ const OrderBookWidget = ({ selectedStock }) => {
                         )}
                     </div>
 
-                    <div ref={bidsScroll} className="order-book-scrollable">
+                    <div className="center-button">
+                        <p className="spread">
+                            Spread: {sortedAsks.length > 0 && sortedBids.length > 0 ? `${sortedAsks[sortedAsks.length - 1].P - sortedBids[0].P} (${100 * (sortedAsks[sortedAsks.length - 1].P - sortedBids[0].P) / ((sortedAsks[sortedAsks.length - 1].P + sortedBids[0].P) / 2)}%)` : `N/A`}
+                        </p>
+                        <button 
+                            onClick={handleReCenter}
+                                style={{
+                                backgroundColor: autoCenter ? "grey" : "red",
+                                color: "white",
+                                padding: "5px 10px",
+                                border: "none",
+                                cursor: "pointer",
+                            }}
+                        >
+                            Re-Center
+                        </button>
+                    </div>
+
+                    <div ref={bidsRef} className="order-book-scrollable">
                         {/* Bids */}
                         {sortedBids.length > 0 ? (
                             sortedBids.map((bid, index) => (
