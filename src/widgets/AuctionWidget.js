@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DataFinder from "../HelperClasses/DataFinder";
 import './AuctionWidget.css';
+import {bidAuctionHandler} from "../HelperClasses/api";
 
 const calculatePnL = () => {
     const pnlResults = DataFinder.getPositionData("12345").map(trade => {
@@ -32,6 +33,7 @@ const realizedPnL = pnlData.reduce((total, trade) => total + parseFloat(trade.pn
 const AuctionWidget = () => {
     const [inputValue, setInputValue] = useState("");
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const [subscribeVar, setSubscribeVar] = useState(true);
 
     const handleInputChange = (e) => {
         const value = parseFloat(e.target.value);
@@ -46,6 +48,7 @@ const AuctionWidget = () => {
     const handleSubmit = () => {
         alert(`Submitted value: ${inputValue}`);
         console.log(`Auctioned value: ${inputValue}`);
+        bidAuctionHandler({bid: inputValue}, setSubscribeVar);
     };
 
     return (
