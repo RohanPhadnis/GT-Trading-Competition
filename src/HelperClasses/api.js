@@ -56,7 +56,6 @@ class AsyncAPICall {
                 jsonResponse['status'] = data.status;
                 console.log(`Response from ${this.path}:`, jsonResponse); // Log full API response
                 messages.push({text: this.path + ": " + jsonResponse.message, status: data.status});
-                console.log("Messages:", messages);
                 return jsonResponse;
             });
 
