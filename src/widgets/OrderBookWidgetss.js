@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback, useRef } from "react";
 import PriceLevelWidget from "./PriceLevelWidgets";
 import "./OrderBookWidgets.css";
 import orderBookInstance from "../HelperClasses/OrderBook"; // Import the OrderBook singleton
+import { truncateDecimal } from "../util/math"; // Import the truncateDecimal function
 
 const OrderBookWidget = ({ selectedStock }) => {
     const [stockData, setStockData] = useState({ bidVolumes: {}, askVolumes: {} });
@@ -82,7 +83,11 @@ const OrderBookWidget = ({ selectedStock }) => {
 
     const sortedAsks = Object.entries(askVolumes)
         .map(([price, quantity]) => ({ P: parseFloat(price), Q: quantity }))
-        .sort((a, b) => b.P - a.P); // Sorted from highest to lowest
+        .sort((a, b) => a.P - b.P); // Sorted from lowest to highest
+
+    const spread = sortedAsks.length > 0 && sortedBids.length > 0
+        ? `${truncateDecimal(sortedAsks[0].P - sortedBids[0].P, 2)} (${truncateDecimal(100 * (sortedAsks[0].P - sortedBids[0].P) / ((sortedAsks[0].P + sortedBids[0].P) / 2), 2)}%)`
+        : `N/A`
 
     const [autoCenter, setAutoCenter] = useState(true);
 
@@ -104,13 +109,13 @@ const OrderBookWidget = ({ selectedStock }) => {
 
     useEffect(() => {
         const handleBidsScroll = () => {
-            if (bidsRef.current && bidsRef.current.scrollTop != 0) {
+            if (bidsRef.current && bidsRef.current.scrollTop !== 0) {
                 setAutoCenter(prev => prev ? !prev : prev);
             }
         };
 
         const handleAsksScroll = () => {
-            if (asksRef.current && asksRef.current.scrollTop != asksRef.current.scrollHeight - asksRef.current.clientHeight) {
+            if (asksRef.current && asksRef.current.scrollTop !== asksRef.current.scrollHeight - asksRef.current.clientHeight) {
                 setAutoCenter(prev => prev ? !prev : prev);
             }
         };
@@ -153,7 +158,7 @@ const OrderBookWidget = ({ selectedStock }) => {
                         <span className="header quantity-header"> Quantity </span>
                         <span className="header orders-header"> Amount </span>
                     </div>
-                    <div ref={asksRef} className="order-book-scrollable">
+                    <div ref={asksRef} className="order-book-scrollable-asks">
                         {/* Asks */}
                         {sortedAsks.length > 0 ? (
                             sortedAsks.map((ask, index) => (
@@ -170,10 +175,9 @@ const OrderBookWidget = ({ selectedStock }) => {
                         )}
                     </div>
 
-                    <div className="center-button">
+                    <div className="center-display">
                         <p className="spread">
-                            Spread: {sortedAsks.length > 0 && sortedBids.length > 0 ? 
-                                `${sortedAsks[sortedAsks.length - 1].P - sortedBids[0].P} (${100 * (sortedAsks[sortedAsks.length - 1].P - sortedBids[0].P) / ((sortedAsks[sortedAsks.length - 1].P + sortedBids[0].P) / 2)}%)` : `N/A`}
+                            Spread: {spread}
                         </p>
                         <button 
                             onClick={handleReCenter}
@@ -189,7 +193,7 @@ const OrderBookWidget = ({ selectedStock }) => {
                         </button>
                     </div>
 
-                    <div ref={bidsRef} className="order-book-scrollable">
+                    <div ref={bidsRef} className="order-book-scrollable-bids">
                         {/* Bids */}
                         {sortedBids.length > 0 ? (
                             sortedBids.map((bid, index) => (
