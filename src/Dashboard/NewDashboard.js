@@ -73,6 +73,10 @@ const NewDashboard = () => {
                 <div className="widget profileWidget">
                     <Profile />
                 </div>
+
+                <div className="widget messageViewer">
+                    <MessageViewer />
+                </div>
             </div>
 
             {/* COLUMN 2 */}
