@@ -82,6 +82,7 @@ let buildupObject = new AsyncAPICall("/buildup", null);
 let teardownObject = new AsyncAPICall("/teardown", buildupObject);
 let limitOrderObject = new AsyncAPICall("/limit_order", buildupObject);
 let marketOrderObject = new AsyncAPICall("/market_order", buildupObject);
+let bidAuctionObject = new AsyncAPICall("/bid_auction", buildupObject);
 let removeObject = new AsyncAPICall("/remove", buildupObject);
 let tickers = [];
 const setTickers = (newTickers) => {
@@ -133,6 +134,10 @@ export function marketOrderHandler(data, subscriber) {
     marketOrderObject.setSubscriber(subscriber);
     marketOrderObject.request(data);
 }
+export function bidAuctionHandler(data, subscriber) {
+    bidAuctionObject.setSubscriber(subscriber);
+    bidAuctionObject.request(data);
+}
 export function removeHandler(data) {
     console.log(data);
     removeObject.request(data);
@@ -152,6 +157,9 @@ export function getLimitOrderData() {
 
 export function getMarketOrderData() {
     return marketOrderObject.data;
+}
+export function getBidAuctionData() {
+
 }
 export function getTickers() {
     return Array.isArray(tickers) && tickers.length > 0 ? [...tickers] : [];
