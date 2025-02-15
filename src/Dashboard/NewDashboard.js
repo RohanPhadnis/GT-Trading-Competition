@@ -14,7 +14,6 @@ import PnLWidget from "../widgets/PnLWidget.js";
 import RealizedPnLWidget from "../widgets/realisedPnLWidget.js";
 import Profile from "../widgets/Profile";
 import {useNavigate} from "react-router-dom";
-
 let initialized = false;
 
 const NewDashboard = () => {
@@ -51,8 +50,13 @@ const NewDashboard = () => {
             {/* COLUMN 1 */}
             <div className="column-1">
                 {/* PNL WIDGET */}
-                <div className="widget pnl-Widget">
+                <div className="widget pnl-Widget-wrapper">
                     <PnLWidget />
+                </div>
+
+                {/* REALISED PNL WIDGET */}
+                <div className="widget pnl-Widget-wrapper">
+                    <RealizedPnLWidget />
                 </div>
 
                 {/* LIST OF EQUITIES */}
@@ -60,18 +64,19 @@ const NewDashboard = () => {
                     <EquitiesDashboard selectedStock={selectedStock} setSelectedStock={setSelectedStock} />
                 </div>
 
+                <div className="Profile-Features">
+                    <div className="widget auctionWidget">
+                        <AuctionWidget />
+                    </div>
+
+                    <div className="widget profileWidget">
+                        <Profile/>
+                    </div>
+                </div>
                 {/* AUCTION WIDGET */}
-                <div className="widget auctionWidget">
-                    <AuctionWidget />
-                </div>
 
-                {/* REALIZED PNL WIDGET */}
-                <div className="widget pnl-Widget">
-                    <RealizedPnLWidget />
-                </div>
-
-                <div className="widget profileWidget">
-                    <Profile />
+                <div className="widget messageViewer">
+                    <MessageViewer/>
                 </div>
             </div>
 

@@ -83,13 +83,31 @@ html, body {
 /**
 Column 1
 **/
-.user-info {
-height: 20%;
+
+.pnl-widget-wrapper {
+  height: 15%;
 }
 
-.auctionWidget {
+.Profile-Features {
+  height: 20%; /* Parent container height */
+  display: flex;
+  flex-direction: row; /* Keep widgets in a horizontal row */
+  gap: 2px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.auctionWidget, .profileWidget {
+  width: 50%; /* Adjust the width to fit both widgets horizontally */
+  height: 100%; /* Ensure they fill the available height */
+}
+
+.messageViewer {
   height: 20%;
 }
+
 
 .equities {
   height: 30%;
@@ -102,7 +120,6 @@ height: 20%;
 
 .pnl-dashboard {
   height: 10%;
-
 }
 /**
 Column 2
@@ -119,6 +136,7 @@ Column 2
 
 .selected-stock, .order-type {
   width: 20%; 
+  height: 100%;
 }
 
 .place-orders {

@@ -172,7 +172,8 @@ const OrderBookWidget = ({ selectedStock }) => {
 
                     <div className="center-button">
                         <p className="spread">
-                            Spread: {sortedAsks.length > 0 && sortedBids.length > 0 ? `${sortedAsks[sortedAsks.length - 1].P - sortedBids[0].P} (${100 * (sortedAsks[sortedAsks.length - 1].P - sortedBids[0].P) / ((sortedAsks[sortedAsks.length - 1].P + sortedBids[0].P) / 2)}%)` : `N/A`}
+                            Spread: {sortedAsks.length > 0 && sortedBids.length > 0 ? 
+                                `${sortedAsks[sortedAsks.length - 1].P - sortedBids[0].P} (${100 * (sortedAsks[sortedAsks.length - 1].P - sortedBids[0].P) / ((sortedAsks[sortedAsks.length - 1].P + sortedBids[0].P) / 2)}%)` : `N/A`}
                         </p>
                         <button 
                             onClick={handleReCenter}

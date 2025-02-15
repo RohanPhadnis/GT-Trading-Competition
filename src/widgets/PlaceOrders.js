@@ -107,7 +107,7 @@ export const LimitOrdersWidget = ({ selectedStock }) => {
 export const SelectedStockWidget = ({ selectedStock }) => {
     return (
         <div className='SelectedStockWidget'>
-            <h3> Trade {selectedStock || "Stock"} </h3>
+            <h3> Trade {selectedStock || ""} </h3>
         </div>
     );
 };
@@ -117,19 +117,20 @@ export const OrderType = ({ orderType, setOrderType }) => {
         <div className="OrderType">
             <span className="choose-title">Choose</span>
             <button
-                className={`market-button ${orderType === "market" ? "selected" : ""}`}
-                onClick={() => setOrderType("market")}
+                className={`market-button ${orderType === "market" ? "selected" : ""}`}  // Ensure "market" gets the "selected" class
+                onClick={() => setOrderType("market")}  // Update state when clicked
             >
                 Market
             </button>
             <button
-                className={`limit-button ${orderType === "limit" ? "selected" : ""}`}
-                onClick={() => setOrderType("limit")}
+                className={`limit-button ${orderType === "limit" ? "selected" : ""}`}  // Ensure "limit" gets the "selected" class
+                onClick={() => setOrderType("limit")}  // Update state when clicked
             >
                 Limit
             </button>
         </div>
     );
 };
+
 
 
