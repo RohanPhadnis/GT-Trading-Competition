@@ -18,7 +18,7 @@ const RealizedPnLWidget = () => {
 
     return (
         <div className={`pnl-widget ${balance >= 0 ? 'pnl-positive' : 'pnl-negative'}`}>
-            <p className="pnl-heading">Realized PnL</p>
+            <p className="pnl-heading">Balance</p>
             <p className="pnl-value">${balance.toFixed(0)}</p>
         </div>
     );
