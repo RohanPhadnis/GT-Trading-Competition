@@ -13,18 +13,10 @@ export const LimitOrdersWidget = ({ selectedStock }) => {
             return;
         }
 
-        const isMarket = !price || Number(price) === 0;
-        if (isMarket) {
-            marketOrderHandler(
-                { ticker: selectedStock, volume: amount, isBid: true },
-                setSubscribeVar
-            );
-        } else {
-            limitOrderHandler(
-                { ticker: selectedStock, volume: amount, isBid: true, price: Number(price) },
-                setSubscribeVar
-            );
-        }
+        limitOrderHandler(
+            { ticker: selectedStock, volume: amount, isBid: true, price: Number(price) },
+            setSubscribeVar
+        );
 
         console.log(`🟢 Buy order placed for ${amount} shares of ${selectedStock} at ${price || "market price"}.`);
     };
@@ -35,18 +27,10 @@ export const LimitOrdersWidget = ({ selectedStock }) => {
             return;
         }
 
-        const isMarket = !price || Number(price) === 0;
-        if (isMarket) {
-            marketOrderHandler(
-                { ticker: selectedStock, volume: amount, isBid: false },
-                setSubscribeVar
-            );
-        } else {
-            limitOrderHandler(
-                { ticker: selectedStock, volume: amount, isBid: false, price: Number(price) },
-                setSubscribeVar
-            );
-        }
+        limitOrderHandler(
+            { ticker: selectedStock, volume: amount, isBid: false, price: Number(price) },
+            setSubscribeVar
+        );
 
         console.log(`🔴 Sell order placed for ${amount} shares of ${selectedStock} at ${price || "market price"}.`);
     };

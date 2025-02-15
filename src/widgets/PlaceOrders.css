@@ -71,6 +71,7 @@
 
 .market-button:hover, .limit-button:hover,
 .market-button:focus, .limit-button:focus, 
+.market-button.selected, .limit-button.selected,
 .market-button:active, .limit-button:active {
     background-color: white; /* Light grey background on hover */
     border: 2px solid white; /* White border on hover */

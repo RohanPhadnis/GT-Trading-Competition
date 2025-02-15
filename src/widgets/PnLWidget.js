@@ -18,7 +18,7 @@ const PnLWidget = () => {
 
     return (
         <div className={`pnl-widget ${pnl >= 0 ? 'pnl-positive' : 'pnl-negative'}`}>
-            <p className="pnl-heading">Total PnL</p>
+            <p className="pnl-heading">Unrealized PnL</p>
             <p className="pnl-value">${pnl.toFixed(0)}</p>
         </div>
     );
