@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { getMessageList } from "../HelperClasses/api";
-import {controls} from "../HelperClasses/controls";
+import { controls } from "../HelperClasses/controls";
 import "./MessageViewer.css";
 
 const MessageViewer = () => {
@@ -16,24 +16,27 @@ const MessageViewer = () => {
     }, [initialized]);
 
     useEffect(() => {
-        var messages = getMessageList();
-        var reversedMessages = [...messages].reverse();
-
+        const messages = getMessageList();
+        const reversedMessages = [...messages].reverse();
         setMessages(reversedMessages);
     }, [subscribeVar]);
 
     return (
         <div className="message-viewer">
-            <h4>Messages</h4>
             <div className="message-widget"> 
-                {messages.map((msg, index) => {return (
-                    <div key={index} style={{ color: msg.status === 200 ? "green" : "red" }}>
+                {messages.map((msg, index) => (
+                    <div 
+                        key={index} 
+                        className={msg.status === 200 ? "message-success" : "message-error"}
+                    >
                         {msg.text}
                     </div>
-                );})}
+                ))}
             </div>
         </div>
     );
 };
 
 export default MessageViewer;
+
+

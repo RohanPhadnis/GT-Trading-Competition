@@ -79,9 +79,6 @@ const NewDashboard = () => {
                     <MessageViewer/>
                 </div>
 
-                <div className="widget messageViewer">
-                    <MessageViewer />
-                </div>
             </div>
 
             {/* COLUMN 2 */}

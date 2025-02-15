@@ -14,7 +14,7 @@ const Profile =  () => {
     };
 
     return (
-        <div>
+        <div className = "profile-widget">
             <p><strong>Username: </strong>{username}</p>
             <button onClick={handleLogout}>Logout</button>
         </div>
