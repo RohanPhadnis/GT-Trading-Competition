@@ -175,23 +175,27 @@ const OrderBookWidget = ({ selectedStock }) => {
                         )}
                     </div>
 
-                    <div className="center-display">
-                        <p className="spread">
-                            Spread: {spread}
-                        </p>
-                        <button 
-                            onClick={handleReCenter}
+                    {/* Spread & Re-Center in a single row */}
+                    <PriceLevelWidget
+                        price={`Spread: ${spread}`}
+                        quantity={""} // No quantity needed
+                        amount={
+                            <button 
+                                onClick={handleReCenter}
                                 style={{
-                                backgroundColor: autoCenter ? "grey" : "red",
-                                color: "white",
-                                padding: "5px 10px",
-                                border: "none",
-                                cursor: "pointer",
-                            }}
-                        >
-                            Re-Center
-                        </button>
-                    </div>
+                                    backgroundColor: autoCenter ? "grey" : "black",
+                                    color: "white",
+                                    padding: "5px 10px",
+                                    border: "none",
+                                    cursor: "pointer",
+                                    borderRadius: "5px"
+                                }}
+                            >
+                                Re-Center
+                            </button>
+                        }
+                        className="spread-row"
+                    />
 
                     <div ref={bidsRef} className="order-book-scrollable-bids">
                         {/* Bids */}

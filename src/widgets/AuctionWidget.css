@@ -23,10 +23,9 @@
 
 /* Header styling */
 .auction-widget-header {
-    font-size: 30px;
+    font-size: 1rem;
     font-family: 'Roboto', sans-serif !important;
     font-weight: bold;
-    margin-bottom: 15px;
     text-align: center;
 }
 
@@ -44,7 +43,7 @@
 
 /* Submit button with centered alignment and updated size */
 .auction-widget-button {
-    width: 60%;
+    width: 80%;
     padding: 4px;
     font-size: 14px;
     font-weight: bold;
@@ -60,7 +59,7 @@
 
 /* Styled input */
 .auction-widget-input {
-    width: 60%; /* Decreased width */
+    width: 70%; /* Decreased width */
     padding: 4px; /* Reduced padding */
     font-size: 14px; /* Smaller font size */
     border: 1px solid #555;

@@ -4,7 +4,6 @@
   flex-direction: column;
   /* Fill the parent’s height (assuming the parent is also sized!) */
   height: 100%;
-  background-color: #121212;
   color: #e0e0e0;
   width: 100%;
   /* Switch to Roboto and bump the size up slightly */
@@ -19,11 +18,17 @@
   justify-content: space-between; /* Ensures tables are spread out evenly */
   flex-wrap: wrap; /* Ensures responsiveness on smaller screens */
   padding: 10px;
+  flex-direction: row;
 }
 
 .table-wrapper {
   flex: 1;
-  min-width: 45%; /* Ensures each table takes at least 45% of the width */
+  background-color: #121212;
+  border-radius: 10px;
+}
+
+.table-wrapper h3 {
+  margin-left: 10px;
 }
 
 
@@ -41,6 +46,7 @@
   border-collapse: collapse;
   overflow-y: auto;
   overflow-x: auto;
+  background-color: #121212;
 }
 
 .pnl-table thead {
