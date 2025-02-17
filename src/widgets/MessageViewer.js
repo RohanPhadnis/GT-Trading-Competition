@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getMessageList } from "../HelperClasses/api";
+import { getMessageList, ErrorCodes } from "../HelperClasses/api";
 import { controls } from "../HelperClasses/controls";
 import "./MessageViewer.css";
 
@@ -27,9 +27,9 @@ const MessageViewer = () => {
                 {messages.map((msg, index) => (
                     <div 
                         key={index} 
-                        className={msg.status === 200 ? "message-success" : "message-error"}
+                        className={msg.errorCode === ErrorCodes.SUCCESS ? "message-success" : "message-error"}
                     >
-                        {msg.text}
+                        {msg.errorMessage}
                     </div>
                 ))}
             </div>
