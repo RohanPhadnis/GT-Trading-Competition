@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
 import {getBuildupData} from "../HelperClasses/api";
-
+import './profile.css'; 
 
 const Profile =  () => {
     const [username, setUsername] = useState(localStorage.getItem("username"));
@@ -14,7 +14,7 @@ const Profile =  () => {
     };
 
     return (
-        <div>
+        <div className = "profile-widget">
             <p><strong>Username: </strong>{username}</p>
             <button onClick={handleLogout}>Logout</button>
         </div>

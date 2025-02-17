@@ -29,7 +29,7 @@ class UserPortfolio {
 
     // Update portfolio and notify subscribers
     updatePortfolio(message) {
-        console.log(message);
+        //console.log(message);
         if (!message || typeof message !== "object") {
             console.error("Invalid message format:", message);
             return;
@@ -42,7 +42,7 @@ class UserPortfolio {
         }
         if (pnl !== undefined) {
             this.data.pnl = pnl;
-            console.log(pnl);
+            //console.log(pnl);
         }
         if (positions && typeof positions === "object") {
             this.data.positions = {...this.data.positions, ...positions };

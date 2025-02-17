@@ -2,23 +2,24 @@ import React, { useEffect, useState, useCallback, useRef } from "react";
 import PriceLevelWidget from "./PriceLevelWidgets";
 import "./OrderBookWidgets.css";
 import orderBookInstance from "../HelperClasses/OrderBook"; // Import the OrderBook singleton
+import { truncateDecimal } from "../util/math"; // Import the truncateDecimal function
 
 const OrderBookWidget = ({ selectedStock }) => {
     const [stockData, setStockData] = useState({ bidVolumes: {}, askVolumes: {} });
     const [hasOrderBook, setHasOrderBook] = useState(false);
 
     // Debugging: Log when the component renders or updates
-    console.log(`🔄 Component rendered for selectedStock: ${selectedStock}`);
+    //console.log(`🔄 Component rendered for selectedStock: ${selectedStock}`);
 
     const updateStockData = useCallback(
         (orderBooks) => {
             // Debugging: Log the data being received
-            console.log("📈 updateStockData called with:", orderBooks);
+            //console.log("📈 updateStockData called with:", orderBooks);
 
             if (orderBooks[selectedStock]) {
-                console.log(`✅ Found data for selectedStock: ${selectedStock}`);
-                console.log("🔹 Updated bidVolumes:", orderBooks[selectedStock].bidVolumes);
-                console.log("🔹 Updated askVolumes:", orderBooks[selectedStock].askVolumes);
+                //console.log(`✅ Found data for selectedStock: ${selectedStock}`);
+                //console.log("🔹 Updated bidVolumes:", orderBooks[selectedStock].bidVolumes);
+                //console.log("🔹 Updated askVolumes:", orderBooks[selectedStock].askVolumes);
 
                 setStockData({
                     bidVolumes: { ...orderBooks[selectedStock].bidVolumes },
@@ -41,9 +42,9 @@ const OrderBookWidget = ({ selectedStock }) => {
 
         // Initialize with current data
         if (orderBookInstance.orderBooks[selectedStock]) {
-            console.log(`📊 Initial data found for selectedStock: ${selectedStock}`);
-            console.log("🔹 Initial bidVolumes:", orderBookInstance.orderBooks[selectedStock].bidVolumes);
-            console.log("🔹 Initial askVolumes:", orderBookInstance.orderBooks[selectedStock].askVolumes);
+            //console.log(`📊 Initial data found for selectedStock: ${selectedStock}`);
+            //console.log("🔹 Initial bidVolumes:", orderBookInstance.orderBooks[selectedStock].bidVolumes);
+            //console.log("🔹 Initial askVolumes:", orderBookInstance.orderBooks[selectedStock].askVolumes);
 
             setStockData({
                 bidVolumes: { ...orderBookInstance.orderBooks[selectedStock].bidVolumes },
@@ -66,9 +67,9 @@ const OrderBookWidget = ({ selectedStock }) => {
     useEffect(() => {
         // Periodically log the current stock data for debugging
         const logInterval = setInterval(() => {
-            console.log(`📊 Periodic log for selectedStock: ${selectedStock}`);
-            console.log("🔹 Current bidVolumes:", stockData.bidVolumes);
-            console.log("🔹 Current askVolumes:", stockData.askVolumes);
+            //console.log(`📊 Periodic log for selectedStock: ${selectedStock}`);
+            //console.log("🔹 Current bidVolumes:", stockData.bidVolumes);
+            //console.log("🔹 Current askVolumes:", stockData.askVolumes);
         }, 5000);
 
         return () => clearInterval(logInterval);
@@ -82,7 +83,11 @@ const OrderBookWidget = ({ selectedStock }) => {
 
     const sortedAsks = Object.entries(askVolumes)
         .map(([price, quantity]) => ({ P: parseFloat(price), Q: quantity }))
-        .sort((a, b) => b.P - a.P); // Sorted from highest to lowest
+        .sort((a, b) => a.P - b.P); // Sorted from lowest to highest
+
+    const spread = sortedAsks.length > 0 && sortedBids.length > 0
+        ? `${truncateDecimal(sortedAsks[0].P - sortedBids[0].P, 2)} (${truncateDecimal(100 * (sortedAsks[0].P - sortedBids[0].P) / ((sortedAsks[0].P + sortedBids[0].P) / 2), 2)}%)`
+        : `N/A`
 
     const [autoCenter, setAutoCenter] = useState(true);
 
@@ -104,13 +109,13 @@ const OrderBookWidget = ({ selectedStock }) => {
 
     useEffect(() => {
         const handleBidsScroll = () => {
-            if (bidsRef.current && bidsRef.current.scrollTop != 0) {
+            if (bidsRef.current && bidsRef.current.scrollTop !== 0) {
                 setAutoCenter(prev => prev ? !prev : prev);
             }
         };
 
         const handleAsksScroll = () => {
-            if (asksRef.current && asksRef.current.scrollTop != asksRef.current.scrollHeight - asksRef.current.clientHeight) {
+            if (asksRef.current && asksRef.current.scrollTop !== asksRef.current.scrollHeight - asksRef.current.clientHeight) {
                 setAutoCenter(prev => prev ? !prev : prev);
             }
         };
@@ -153,7 +158,7 @@ const OrderBookWidget = ({ selectedStock }) => {
                         <span className="header quantity-header"> Quantity </span>
                         <span className="header orders-header"> Amount </span>
                     </div>
-                    <div ref={asksRef} className="order-book-scrollable">
+                    <div ref={asksRef} className="order-book-scrollable-asks">
                         {/* Asks */}
                         {sortedAsks.length > 0 ? (
                             sortedAsks.map((ask, index) => (
@@ -170,25 +175,29 @@ const OrderBookWidget = ({ selectedStock }) => {
                         )}
                     </div>
 
-                    <div className="center-button">
-                        <p className="spread">
-                            Spread: {sortedAsks.length > 0 && sortedBids.length > 0 ? `${sortedAsks[sortedAsks.length - 1].P - sortedBids[0].P} (${100 * (sortedAsks[sortedAsks.length - 1].P - sortedBids[0].P) / ((sortedAsks[sortedAsks.length - 1].P + sortedBids[0].P) / 2)}%)` : `N/A`}
-                        </p>
-                        <button 
-                            onClick={handleReCenter}
+                    {/* Spread & Re-Center in a single row */}
+                    <PriceLevelWidget
+                        price={`Spread: ${spread}`}
+                        quantity={""} // No quantity needed
+                        amount={
+                            <button 
+                                onClick={handleReCenter}
                                 style={{
-                                backgroundColor: autoCenter ? "grey" : "red",
-                                color: "white",
-                                padding: "5px 10px",
-                                border: "none",
-                                cursor: "pointer",
-                            }}
-                        >
-                            Re-Center
-                        </button>
-                    </div>
+                                    backgroundColor: autoCenter ? "grey" : "black",
+                                    color: "white",
+                                    padding: "5px 10px",
+                                    border: "none",
+                                    cursor: "pointer",
+                                    borderRadius: "5px"
+                                }}
+                            >
+                                Re-Center
+                            </button>
+                        }
+                        className="spread-row"
+                    />
 
-                    <div ref={bidsRef} className="order-book-scrollable">
+                    <div ref={bidsRef} className="order-book-scrollable-bids">
                         {/* Bids */}
                         {sortedBids.length > 0 ? (
                             sortedBids.map((bid, index) => (

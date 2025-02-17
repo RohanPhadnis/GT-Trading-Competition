@@ -28,7 +28,27 @@
     flex-direction: column;  /* Ensure stacking vertically */
     align-items: center;  /* Center elements horizontally */
     gap: 5px; 
+    background-color: #1a1a1a;
+    border-radius: 5px;
+    padding : 14px;
 }
+
+.pnl-heading {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.6); /* White and translucent */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+  }
+
+
+.SelectedStockWidget {
+    padding : 20px;
+    background-color: #1a1a1a;
+    height: 100%;
+    border-radius: 5px;
+    align-items: center; 
+  }
 
 .buy-sell-column-1 {
     display: flex;
@@ -41,7 +61,8 @@
     display: flex;
     flex-direction: column;
     gap : 10px;
-    width : 33%
+    width : 33%;
+    align-items: flex-end;
 }
 
 .buy-sell-column-3 {
@@ -54,6 +75,11 @@
 .choose-title {
     font-size: 16px; /* Optional: Adjust font size */
     text-align: center;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.6); /* White and translucent */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
 }
 
 .market-button, .limit-button {
@@ -71,6 +97,7 @@
 
 .market-button:hover, .limit-button:hover,
 .market-button:focus, .limit-button:focus, 
+.market-button.selected, .limit-button.selected,
 .market-button:active, .limit-button:active {
     background-color: white; /* Light grey background on hover */
     border: 2px solid white; /* White border on hover */
@@ -78,10 +105,16 @@
     box-shadow: none; /* No shadow for flatness */
 }
 
-.selectedStockWidget {
-  padding: 2px;
+.market-button.selected {
+    background-color: white;  
+    color: black;
 }
-/* Input Fields & Buttons - Same Width & Height */
+
+.limit-button.selected {
+    background-color: white;  
+    color: black;
+}
+
 
 .buy-button,
 .sell-button {
