@@ -9,17 +9,17 @@ const OrderBookWidget = ({ selectedStock }) => {
     const [hasOrderBook, setHasOrderBook] = useState(false);
 
     // Debugging: Log when the component renders or updates
-    console.log(`🔄 Component rendered for selectedStock: ${selectedStock}`);
+    //console.log(`🔄 Component rendered for selectedStock: ${selectedStock}`);
 
     const updateStockData = useCallback(
         (orderBooks) => {
             // Debugging: Log the data being received
-            console.log("📈 updateStockData called with:", orderBooks);
+            //console.log("📈 updateStockData called with:", orderBooks);
 
             if (orderBooks[selectedStock]) {
-                console.log(`✅ Found data for selectedStock: ${selectedStock}`);
-                console.log("🔹 Updated bidVolumes:", orderBooks[selectedStock].bidVolumes);
-                console.log("🔹 Updated askVolumes:", orderBooks[selectedStock].askVolumes);
+                //console.log(`✅ Found data for selectedStock: ${selectedStock}`);
+                //console.log("🔹 Updated bidVolumes:", orderBooks[selectedStock].bidVolumes);
+                //console.log("🔹 Updated askVolumes:", orderBooks[selectedStock].askVolumes);
 
                 setStockData({
                     bidVolumes: { ...orderBooks[selectedStock].bidVolumes },
@@ -42,9 +42,9 @@ const OrderBookWidget = ({ selectedStock }) => {
 
         // Initialize with current data
         if (orderBookInstance.orderBooks[selectedStock]) {
-            console.log(`📊 Initial data found for selectedStock: ${selectedStock}`);
-            console.log("🔹 Initial bidVolumes:", orderBookInstance.orderBooks[selectedStock].bidVolumes);
-            console.log("🔹 Initial askVolumes:", orderBookInstance.orderBooks[selectedStock].askVolumes);
+            //console.log(`📊 Initial data found for selectedStock: ${selectedStock}`);
+            //console.log("🔹 Initial bidVolumes:", orderBookInstance.orderBooks[selectedStock].bidVolumes);
+            //console.log("🔹 Initial askVolumes:", orderBookInstance.orderBooks[selectedStock].askVolumes);
 
             setStockData({
                 bidVolumes: { ...orderBookInstance.orderBooks[selectedStock].bidVolumes },
@@ -67,9 +67,9 @@ const OrderBookWidget = ({ selectedStock }) => {
     useEffect(() => {
         // Periodically log the current stock data for debugging
         const logInterval = setInterval(() => {
-            console.log(`📊 Periodic log for selectedStock: ${selectedStock}`);
-            console.log("🔹 Current bidVolumes:", stockData.bidVolumes);
-            console.log("🔹 Current askVolumes:", stockData.askVolumes);
+            //console.log(`📊 Periodic log for selectedStock: ${selectedStock}`);
+            //console.log("🔹 Current bidVolumes:", stockData.bidVolumes);
+            //console.log("🔹 Current askVolumes:", stockData.askVolumes);
         }, 5000);
 
         return () => clearInterval(logInterval);

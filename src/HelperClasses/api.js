@@ -63,7 +63,9 @@ class AsyncAPICall {
             })
             .then(async(data) => {
                 console.log(`Request to ${this.path} - Status:`, data.status); // Log response status
+                console.log(`Raw response before JSON parsing:`, data);
                 const jsonResponse = await data.json();
+                console.log(jsonResponse)
                 jsonResponse['status'] = data.status;
                 console.log(`Response from ${this.path}:`, jsonResponse); // Log full API response
                 messages.push({errorMessage: this.path + ": " + jsonResponse.message.errorMessage, errorCode: jsonResponse.message.errorCode});
