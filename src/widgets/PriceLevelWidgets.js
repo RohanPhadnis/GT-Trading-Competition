@@ -6,7 +6,7 @@ const PriceLevelWidget = ({ price, quantity, amount, className }) => {
     <div className={`price-level-widget ${className}`}>
       <span className="price">{price}</span>
       <span className="quantity">{quantity}</span>
-      <span className="amount">{amount}</span>
+      <span className="amount">{amount}</span> {/* Supports JSX like buttons */}
     </div>
   );
 };

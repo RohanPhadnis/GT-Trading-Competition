@@ -13,6 +13,17 @@ export const HTTPStatusCodes = Object.freeze({
     TOO_MANY_REQUESTS: 429,
 });
 
+export const ErrorCodes = Object.freeze({
+    SUCCESS: 0,
+    AUTHENTICATION_FAILED: 1,
+    RATE_LIMITED: 2,
+    TRADE_LOCKED: 3,
+    BAD_INPUT: 4,
+    AUCTION_LOCKED: 5,
+    POSITION_LIMIT_EXCEEDED: 6,
+    INSUFFICIENT_BALANCE: 7,
+});
+
 let messages = [];
 
 class AsyncAPICall {
@@ -52,10 +63,12 @@ class AsyncAPICall {
             })
             .then(async(data) => {
                 console.log(`Request to ${this.path} - Status:`, data.status); // Log response status
+                console.log(`Raw response before JSON parsing:`, data);
                 const jsonResponse = await data.json();
+                console.log(jsonResponse)
                 jsonResponse['status'] = data.status;
                 console.log(`Response from ${this.path}:`, jsonResponse); // Log full API response
-                messages.push({text: this.path + ": " + jsonResponse.message, status: data.status});
+                messages.push({errorMessage: this.path + ": " + jsonResponse.message.errorMessage, errorCode: jsonResponse.message.errorCode});
                 return jsonResponse;
             });
 

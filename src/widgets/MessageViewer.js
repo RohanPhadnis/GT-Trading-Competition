@@ -1,12 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
-import { getMessageList } from "../HelperClasses/api";
-import {controls} from "../HelperClasses/controls";
+import React, { useState, useEffect } from "react";
+import { getMessageList, ErrorCodes } from "../HelperClasses/api";
+import { controls } from "../HelperClasses/controls";
+import "./MessageViewer.css";
 
 const MessageViewer = () => {
     const [messages, setMessages] = useState([]);
     const [initialized, setInitialized] = useState(false);
     const [subscribeVar, setSubscribeVar] = useState(0);
-    const messageEndRef = useRef(null);
 
     useEffect(() => {
         if (!initialized) {
@@ -16,32 +16,27 @@ const MessageViewer = () => {
     }, [initialized]);
 
     useEffect(() => {
-        setMessages(getMessageList());
+        const messages = getMessageList();
+        const reversedMessages = [...messages].reverse();
+        setMessages(reversedMessages);
     }, [subscribeVar]);
 
-    // Auto-scroll to the bottom when new messages arrive
-    useEffect(() => {
-        if (messageEndRef.current) {
-            messageEndRef.current.scrollIntoView({ behavior: "smooth" });
-        }
-    }, [messages]);
-
     return (
-        <div style={{
-            width: "100%",
-            maxHeight: "300px",
-            overflowY: "auto",
-            maxWidth: "400px",
-        }}>
-                <h4>Messages</h4>
-            {messages.map((msg, index) => {return (
-                <div key={index} style={{ color: msg.status === 200 ? "green" : "red" }}>
-                    {msg.text}
-                </div>
-            );})}
-            <div ref={messageEndRef} />
+        <div className="message-viewer">
+            <div className="message-widget"> 
+                {messages.map((msg, index) => (
+                    <div 
+                        key={index} 
+                        className={msg.errorCode === ErrorCodes.SUCCESS ? "message-success" : "message-error"}
+                    >
+                        {msg.errorMessage}
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
 
 export default MessageViewer;
+
+

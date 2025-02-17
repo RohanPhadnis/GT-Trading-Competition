@@ -2,6 +2,7 @@ import { Client } from "@stomp/stompjs";
 import { getBuildupData } from "../HelperClasses/api";
 import orderBookInstance from "../HelperClasses/OrderBook";
 import userPortfolio from "./UserPortfolio";
+import CandlestickTracker from "./CandlestickTracker"
 
 class SocketManager {
     constructor() {
@@ -24,10 +25,11 @@ class SocketManager {
         const brokerURL = `ws://ec2-13-59-143-196.us-east-2.compute.amazonaws.com:8080/exchange-socket?Session-ID=${encodeURIComponent(
             buildupData.sessionToken
         )}&Username=${encodeURIComponent(buildupData.username)}`; */
-        /*
-        const brokerURL = `ws://localhost:8080/exchange-socket?Session-ID=${encodeURIComponent(
+        
+        /*const brokerURL = `ws://localhost:8080/exchange-socket?Session-ID=${encodeURIComponent(
             buildupData.sessionToken
         )}&Username=${encodeURIComponent(buildupData.username)}`*/
+	
         const brokerURL = `ws://ec2-3-16-107-184.us-east-2.compute.amazonaws.com:8080/exchange-socket?Session-ID=${encodeURIComponent(
             buildupData.sessionToken
         )}&Username=${encodeURIComponent(buildupData.username)}`
@@ -83,6 +85,9 @@ class SocketManager {
             //console.log("Private message received:", message.body);
             this.handlePrivateMessage(JSON.parse(message.body));
         });
+        this.stompClient.subscribe("/topic/chart", (message) => {
+            this.handleChartUpdate(JSON.parse(message.body));
+        });
     }
 
     // Disconnect from the WebSocket server
@@ -125,6 +130,35 @@ class SocketManager {
             console.error("❌ Error processing private message:", error);
         }
     }
+    handleChartUpdate(data) {
+        if (!data || typeof data !== "object") {
+            console.warn("⚠ Received invalid chart update:", data);
+            return;
+        }
+    
+        console.log("📊 Received Chart Update:", data);
+    
+        Object.entries(data).forEach(([ticker, ohlc]) => {
+            if (
+                typeof ohlc.open === "number" &&
+                typeof ohlc.high === "number" &&
+                typeof ohlc.low === "number" &&
+                typeof ohlc.close === "number"
+            ) {
+                CandlestickTracker.insertCandle(ticker, {
+                    open: ohlc.open,
+                    high: ohlc.high,
+                    low: ohlc.low,
+                    close: ohlc.close,
+                    timestamp: Date.now() // Use the current timestamp
+                });
+            } else {
+                console.warn(`⚠ Invalid OHLC data for ${ticker}:`, ohlc);
+            }
+        });
+    }
+    
+    
 
     // Add your logic to process private messages
 
