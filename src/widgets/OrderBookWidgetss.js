@@ -164,9 +164,9 @@ const OrderBookWidget = ({ selectedStock }) => {
                             sortedAsks.map((ask, index) => (
                                 <PriceLevelWidget
                                     key={`ask-${index}`}
-                                    price={ask.P}
-                                    quantity={ask.Q}
-                                    amount={ask.P * ask.Q}
+                                    price={truncateDecimal(ask.P, 2)}
+                                    quantity={truncateDecimal(ask.Q, 2)}
+                                    amount={truncateDecimal(ask.P * ask.Q)}
                                     className="ask-row"
                                 />
                             ))
@@ -203,9 +203,9 @@ const OrderBookWidget = ({ selectedStock }) => {
                             sortedBids.map((bid, index) => (
                                 <PriceLevelWidget
                                     key={`bid-${index}`}
-                                    price={bid.P}
-                                    quantity={bid.Q}
-                                    amount={bid.Q * bid.P}
+                                    price={truncateDecimal(bid.P, 2)}
+                                    quantity={truncateDecimal(bid.Q, 2)}
+                                    amount={truncateDecimal(bid.Q * bid.P, 2)}
                                     className="bid-row"
                                 />
                             ))
