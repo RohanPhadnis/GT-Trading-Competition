@@ -60,7 +60,7 @@ const AuctionWidget = () => {
                     min="1"
                     placeholder="Realized PnL Risked"
                     value={inputValue}
-                    onChange={handleInputChange}
+                    // onChange={handleInputChange}
                     className="auction-widget-input"
                 />
                 <button
