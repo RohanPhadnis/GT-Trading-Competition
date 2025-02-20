@@ -104,7 +104,7 @@ const NewDashboard = () => {
 
                 {/* Chart Widget */}
                 <div className="widget chart">
-                    <ChartWidget />
+                    <ChartWidget selectedStock={selectedStock}/>
                 </div>
 
                 {/* TRADE TABLE */}

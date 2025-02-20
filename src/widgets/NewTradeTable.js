@@ -53,12 +53,12 @@ const TradeTable = () => {
                         </thead>
                         <tbody>
                             {Object.keys(positions).length > 0 ? (
-                                Object.entries(positions).map(([ticker, quantity], index) => (
+                                Object.entries(positions).map(([ticker, details], index) => (
                                     <tr key={`position-${index}`}>
                                         <td>{ticker}</td>
                                         <td>{}</td>
-                                        <td>{}</td>
-                                        <td>{quantity}</td>
+                                        <td>{details.averagePrice}</td>
+                                        <td>{details.quantity}</td>
                                     </tr>
                                 ))
                             ) : (
