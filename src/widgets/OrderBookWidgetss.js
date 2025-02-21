@@ -156,7 +156,7 @@ const OrderBookWidget = ({ selectedStock }) => {
                     <div className="column-headers">
                         <span className="header price-header"> Price </span>
                         <span className="header quantity-header"> Quantity </span>
-                        <span className="header orders-header"> Amount </span>
+                        {/*<span className="header orders-header"> Amount </span>*/}
                     </div>
                     <div ref={asksRef} className="order-book-scrollable-asks">
                         {/* Asks */}
@@ -166,7 +166,7 @@ const OrderBookWidget = ({ selectedStock }) => {
                                     key={`ask-${index}`}
                                     price={truncateDecimal(ask.P, 2)}
                                     quantity={truncateDecimal(ask.Q, 2)}
-                                    amount={truncateDecimal(ask.P * ask.Q)}
+                                    // amount={truncateDecimal(ask.P * ask.Q)}
                                     className="ask-row"
                                 />
                             ))
@@ -205,7 +205,7 @@ const OrderBookWidget = ({ selectedStock }) => {
                                     key={`bid-${index}`}
                                     price={truncateDecimal(bid.P, 2)}
                                     quantity={truncateDecimal(bid.Q, 2)}
-                                    amount={truncateDecimal(bid.Q * bid.P, 2)}
+                                    // amount={truncateDecimal(bid.Q * bid.P, 2)}
                                     className="bid-row"
                                 />
                             ))
