@@ -32,7 +32,7 @@ const EquitiesDashboard = ({ selectedStock, setSelectedStock }) => {
                                 className={`stock-item ${selectedStock === ticker ? "selected" : ""}`}
                                 onClick={() => handleStockClick(ticker)}
                             >
-                                <StockWidget ticker={ticker}/> 
+                                <StockWidget ticker={ticker} selected={selectedStock === ticker}/>
                             </div>
                         ))
                     ) : (
