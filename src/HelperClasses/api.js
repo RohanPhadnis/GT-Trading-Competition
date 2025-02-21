@@ -1,9 +1,9 @@
 import socketManager from "../HelperClasses/SocketManager";
 import orderBookInstance from "./OrderBook";
 import {controls} from "./controls";
-//const URI = "http://ec2-13-59-143-196.us-east-2.compute.amazonaws.com:8080"; // micro
+const URI = "http://ec2-13-59-143-196.us-east-2.compute.amazonaws.com:8080"; // micro
 //const URI = "http://localhost:8080"                                               // local
-const URI = "http://ec2-3-16-107-184.us-east-2.compute.amazonaws.com:8080"        // deployment
+//const URI = "http://ec2-3-16-107-184.us-east-2.compute.amazonaws.com:8080"        // deployment
 
 export const HTTPStatusCodes = Object.freeze({
     OK: 200,

@@ -1,7 +1,7 @@
 import React from "react";
 import "./StockWidget.css";
 
-const StockWidget = ({ ticker }) => {
+const StockWidget = ({ ticker, selected }) => {
     console.log("🔍 StockWidget received ticker:", ticker);
 
     // Ensure ticker is always a valid string
@@ -10,8 +10,8 @@ const StockWidget = ({ ticker }) => {
         return <div className = "stock-widget" > Build Up First! </div>;
     }
 
-    return ( 
-        <div className = "stock-widget" >
+    return (
+        <div className = {`${selected ? "selected-" : ""}stock-widget`} >
             <div className = "stock-header" >
                 <span className = "ticker" > { ticker } </span> 
             </div>
